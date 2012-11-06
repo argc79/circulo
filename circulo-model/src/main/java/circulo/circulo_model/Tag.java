@@ -13,6 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 
+/**
+ * Tag model class
+ * 
+ * @author Anibal
+ * 
+ */
 @Entity
 @NamedQuery(name = "findAllTags", query = "select t from Tag t")
 public class Tag implements Serializable {
