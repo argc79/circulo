@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>Circulo</title>
+		<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css' />
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
+	</head>
+	<body>
+		<div id="hd">
+			<div id="logo">
+				<img src="logo.png" width="50px" height="60px" alt="Wicket Logo" />
+				<h1>Circulo</h1>
+			</div>
+		</div>
+		<!-- <wicket:border>  --><!-- Crear un border aparte para el login, y otro para la pantalla de que fue correcto o erroneo -->
+			<div id="bd" align="center">
+				<h2>Login</h2>
+				<form wicket:id="UserLoginForm" id="UserLoginForm" name="UserLoginForm" method="post" action="">
+					<div wicket:id="feedback"></div>
+					<br/>
+					<table>
+						<tr>
+							<td><h3>User Name</h3></td>
+							<td><input wicket:id="userName" name="userName" type="text"/></td>
+						</tr>
+						<tr>
+							<td><h3>Password</h3></td>
+							<td><input wicket:id="password" name="password" type="password"/></td>
+						</tr>
+					</table>
+					<input class="button" type="submit" wicket:id="btnLogin" value="Login"/>
+					<input class="button" type="submit" wicket:id="btnNewUser" value="New User"/>
+				</form>
+				<br/>
+				<p>
+					Please mention the correct Wicket version: <wicket:container wicket:id="version">1.5-SNAPSHOT</wicket:container>.
+				</p>
+			</div>
+		<!-- </wicket:border> -->
+		<div id="ft">
+		</div>
+	</body>
+</html>

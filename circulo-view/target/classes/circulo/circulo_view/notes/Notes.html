@@ -1,0 +1,67 @@
+Ê<wicket:extend>
+	
+		<!-- <wicket:border>  --><!-- Crear un border aparte para el login, y otro para la pantalla de que fue correcto o erroneo -->
+		<div id="bd" align="center">
+			<script src="nicEdit/nicEdit.js" type="text/javascript"></script>
+			<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>		
+			<h2>Notes</h2>
+			<form wicket:id="NotesMainForm" id="NotesMainForm" name="NotesMainForm" method="post" action="">
+				<div wicket:id="feedback"></div>
+				<br/>
+				<table>
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<td>
+										<h3>Tag:</h3>
+										<div>
+											<select wicket:id="tag" class="selectList" size="8"  style="width:200px"/>
+											<br/>
+											<div wicket:id="tagForm"></div>
+											<a wicket:id="btnNewTag">New</a>
+											<a wicket:id="btnEditTag">Edit</a>
+											<a wicket:id="btnDeleteTag">Delete</a>
+										</div>
+										<br/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h3>Note:</h3>
+										<div>
+											<select class="selectList" wicket:id="note" size="8"  style="width:200px"/>
+											<br/>
+											<input class="button" type="submit" value="New"/>
+											<input class="button" type="submit" value="Edit"/>
+										</div>
+										<br/>
+									</td>
+								</tr>
+							</table>	
+						</td>
+						<td>
+							<div align="center">
+								<textarea wicket:id="noteContent" cols="50" rows="25" name="content"></textarea>
+								<input wicket:id="saveWicket" class="button" type="submit" value="submit"/>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<!-- continue heere -->
+		<!-- <div id="bd" align="center">
+			<form wicket:id="NewUserForm" id="NewUserForm" name="NewUserForm" method="post" action="">
+					<br/>
+					<input class="button" type="submit" wicket:id="btnSave" value="Save"/>
+					<input class="button" type="submit" wicket:id="btnCancel" value="Cancel"/>
+				</form>
+			<br/>
+			<p>
+				Please mention the correct Wicket version: <wicket:container wicket:id="version">1.5-SNAPSHOT</wicket:container>.
+			</p>
+		</div>-->
+		<!-- </wicket:border> -->
+	
+</wicket:extend>

@@ -1,0 +1,26 @@
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+Ê	<wicket:extend>
+		<!-- <wicket:border>  --><!-- Crear un border aparte para el login, y otro para la pantalla de que fue correcto o erroneo -->
+		<div id="bd1" align="center">
+			<h2>New Tag</h2>
+			<form wicket:id="TagForm" id="TagForm" name="TagForm" method="post" action="">
+					<div wicket:id="feedback"/>
+					<br/>
+					<table>
+						<tr>
+							<td><h3>Name</h3><br/><!-- <div wicket:id="duplicateTag" id="duplicateTag"></div> --></td>
+							<td><input wicket:id="name" name="name" type="text"/></td>
+						</tr>
+					</table>
+					<!-- <a class="button" wicket:id="saveTag">Save</a> -->
+					<input class="button" type="submit" wicket:id="btnSave" value="Save"/>
+					<input class="button" type="submit" wicket:id="btnCancel" value="Cancel"/><!-- Close form with JavaScript -->
+				</form>
+			<br/>
+			<p>
+				Please mention the correct Wicket version: <wicket:container wicket:id="version">1.5-SNAPSHOT</wicket:container>.
+			</p>
+		</div>
+		<!-- </wicket:border> -->
+	</wicket:extend>
+</wicket:panel>

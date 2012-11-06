@@ -1,0 +1,37 @@
+Ê<wicket:extend>
+	
+		<!-- <wicket:border>  --><!-- Crear un border aparte para el login, y otro para la pantalla de que fue correcto o erroneo -->
+		<div id="bd" align="center">
+			<h2>New User</h2>
+			<form wicket:id="NewUserForm" id="NewUserForm" name="NewUserForm" method="post" action="">
+					<div wicket:id="feedback"/>
+					<br/>
+					<table>
+						<tr>
+							<td><h3>User Name</h3></td>
+							<td><input wicket:id="userName" name="userName" type="text"/></td>
+						</tr>
+						<tr>
+							<td><h3>Password</h3></td>
+							<td><input wicket:id="password" name="password" type="password"/></td>
+						</tr>
+						<tr>
+							<td><h3>email</h3></td>
+							<td><input wicket:id="email" name="email" type="text"/></td>
+						</tr>
+						<tr>
+							<td><h3>Role</h3></td>
+							<td><select wicket:id="role"/></td>
+						</tr>
+					</table>
+					<input class="button" type="submit" wicket:id="btnSave" value="Save"/>
+					<input class="button" type="submit" wicket:id="btnCancel" value="Cancel"/>
+				</form>
+			<br/>
+			<p>
+				Please mention the correct Wicket version: <wicket:container wicket:id="version">1.5-SNAPSHOT</wicket:container>.
+			</p>
+		</div>
+		<!-- </wicket:border> -->
+	
+</wicket:extend>
