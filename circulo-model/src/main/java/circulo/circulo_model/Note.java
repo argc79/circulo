@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 
+/**
+ * Test
+ * */
 @Entity
 @NamedQuery(name = "findAllNotes", query = "select n from Note n")
 public class Note implements Serializable {
