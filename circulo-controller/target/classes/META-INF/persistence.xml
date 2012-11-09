@@ -17,7 +17,7 @@
 			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
 			<property name="hibernate.connection.username" value="postgres" />
 			<property name="hibernate.connection.password" value="argc*171179" />
-			<property name="hibernate.connection.url" value="jdbc:postgresql://192.168.1.103/circulo" />
+			<property name="hibernate.connection.url" value="jdbc:postgresql://192.168.1.106/circulo" />
 			<property name="hibernate.max_fetch_depth" value="3" />
 			<property name="hibernate.show_sql" value="true" />
 		</properties>
