@@ -27,6 +27,19 @@ public class Tag implements Serializable {
 	private String name;
 	private Set<Note> notes = new HashSet<Note>();
 
+	@Override
+	public int hashCode() {
+		return id;
+	}
+
+	@Override
+	public boolean equals(Object arg0) {
+		if (arg0 == null || !arg0.getClass().equals(getClass()))
+			return false;
+
+		return id == ((Tag) arg0).getId();
+	}
+
 	@ManyToMany(mappedBy = "tags", cascade = CascadeType.ALL)
 	public Set<Note> getNotes() {
 		return notes;

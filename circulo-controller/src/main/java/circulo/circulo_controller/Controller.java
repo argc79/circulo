@@ -6,4 +6,5 @@ public interface Controller {
 	TagController getTagController();
 
 	NoteController getNoteController();
+
 }

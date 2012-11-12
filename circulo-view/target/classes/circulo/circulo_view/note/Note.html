@@ -1,23 +1,20 @@
-Ê<wicket:extend>
-	
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+Ê	<wicket:extend>
 		<!-- <wicket:border>  --><!-- Crear un border aparte para el login, y otro para la pantalla de que fue correcto o erroneo -->
-		<div id="bd" align="center">
+		<div id="bd1" align="center">
 			<h2>New Note</h2>
 			<form wicket:id="NoteForm" id="NoteForm" name="NoteForm" method="post" action="">
 					<div wicket:id="feedback"/>
 					<br/>
 					<table>
 						<tr>
-							<td><h3>Subject</h3></td>
+							<td><h3>Subject</h3><br/><!-- <div wicket:id="duplicateTag" id="duplicateTag"></div> --></td>
 							<td><input wicket:id="subject" name="subject" type="text"/></td>
 						</tr>
-						<tr>
-							<td><h3>Tag</h3></td>
-							<td><select wicket:id="tag"/></td>
-						</tr>
 					</table>
+					<!-- <a class="button" wicket:id="saveTag">Save</a> -->
 					<input class="button" type="submit" wicket:id="btnSave" value="Save"/>
-					<input class="button" type="submit" wicket:id="btnCancel" value="Cancel"/>
+					<input class="button" type="submit" wicket:id="btnCancel" value="Cancel"/><!-- Close form with JavaScript -->
 				</form>
 			<br/>
 			<p>
@@ -25,5 +22,5 @@
 			</p>
 		</div>
 		<!-- </wicket:border> -->
-	
-</wicket:extend>
+	</wicket:extend>
+</wicket:panel>

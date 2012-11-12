@@ -95,4 +95,8 @@ public abstract class BaseService<T, X> {
 
 	public abstract List<X> findAll() throws ServiceException;
 
+	public final void flush() {
+		getEntityManager().flush();
+	}
+
 }

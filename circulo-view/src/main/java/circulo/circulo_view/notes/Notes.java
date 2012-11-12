@@ -19,6 +19,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
+import circulo.circulo_controller.NoteController;
 import circulo.circulo_controller.ServiceException;
 import circulo.circulo_controller.TagController;
 import circulo.circulo_model.Note;
@@ -45,11 +46,15 @@ public class Notes extends CirculoPage {
 		private IModel<List<? extends Tag>> tagsModel;
 
 		private final CirculoModalWindow tagModelWindow;
+		private final CirculoModalWindow noteModelWindow;
 		private final DropDownChoice<Tag> tagDDC;
 		private final DropDownChoice<Note> noteDDC;
 		private final AjaxLink<Void> newTagButton;
 		private final AjaxLink<Void> editTagButton;
 		private final AjaxLink<Void> deleteTagButton;
+		private final AjaxLink<Void> newNoteButton;
+		private final AjaxLink<Void> editNoteButton;
+		private final AjaxLink<Void> deleteNoteButton;
 
 		final TextArea<String> address;
 		private final Button saveWicket;
@@ -60,12 +65,17 @@ public class Notes extends CirculoPage {
 			feedback.setOutputMarkupId(true);
 
 			tagDDC = getTagDDC(getTags());
-			noteDDC = getNoteDDC(getNotes());
+			noteDDC = getNoteDDC(getNotes(false));
 
 			newTagButton = getNewTagButton();
 			editTagButton = getEditTagButton();
 			deleteTagButton = getDeleteTagButton();
 			tagModelWindow = getTagModelWindow();
+
+			newNoteButton = getNewNoteButton();
+			editNoteButton = getEditNoteButton();
+			deleteNoteButton = getDeleteNoteButton();
+			noteModelWindow = getNoteModelWindow();
 
 			// TODO start of refactor
 			saveWicket = new Button("saveWicket") {
@@ -84,15 +94,28 @@ public class Notes extends CirculoPage {
 			add(feedback);
 			add(tagDDC);
 			add(tagModelWindow.getModalWindow());
+			add(noteModelWindow.getModalWindow());
 			add(newTagButton);
 			add(editTagButton);
 			add(deleteTagButton);
+			add(newNoteButton);
+			add(editNoteButton);
+			add(deleteNoteButton);
 			add(noteDDC);
 		}
 
-		private List<Note> getNotes() {
+		private List<Note> getNotes(boolean refresh) {
 			List<Note> notes = new ArrayList<Note>();
 			if (selectedTag != null) {
+				if (refresh) {
+					List<Tag> tags = getTags();
+					for (Tag selected : tags) {
+						if (selectedTag.getId() == selected.getId()) {
+							selectedTag(selected);
+							break;
+						}
+					}
+				}
 				notes = Arrays.asList(selectedTag.getNotes().toArray(
 						new Note[] {}));
 			}
@@ -132,6 +155,29 @@ public class Notes extends CirculoPage {
 			return link;
 		}
 
+		private AjaxLink<Void> getDeleteNoteButton() {
+			AjaxLink<Void> link = new AjaxLink<Void>("btnDeleteNote") {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onClick(AjaxRequestTarget target) {
+					try {
+						NoteController controller = getController()
+								.getNoteController();
+						Note tagObject = noteDDC.getModel().getObject();
+						tagObject = controller.findByPrimaryKey(tagObject
+								.getId());
+						controller.remove(tagObject);
+						noteDDC.setChoices(controller.findAll());
+						target.add(noteDDC);
+					} catch (ServiceException e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			return link;
+		}
+
 		private AjaxLink<Void> getNewTagButton() {
 
 			AjaxLink<Void> link = new AjaxLink<Void>("btnNewTag") {
@@ -141,9 +187,27 @@ public class Notes extends CirculoPage {
 				public void onClick(AjaxRequestTarget target) {
 					try {
 						Page page = new circulo.circulo_view.tag.Tag(
-								getParentPage().getPageReference(),
 								tagModelWindow.getModalWindow());
 						tagModelWindow.show(page, target);
+					} catch (CirculoException e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			return link;
+		}
+
+		private AjaxLink<Void> getNewNoteButton() {
+
+			AjaxLink<Void> link = new AjaxLink<Void>("btnNewNote") {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onClick(AjaxRequestTarget target) {
+					try {
+						Page page = new circulo.circulo_view.note.Note(
+								selectedTag, noteModelWindow.getModalWindow());
+						noteModelWindow.show(page, target);
 					} catch (CirculoException e) {
 						e.printStackTrace();
 					}
@@ -161,9 +225,29 @@ public class Notes extends CirculoPage {
 				public void onClick(AjaxRequestTarget target) {
 					try {
 						Page page = new circulo.circulo_view.tag.Tag(
-								getParentPage().getPageReference(),
-								selectedTag, tagModelWindow.getModalWindow());
+
+						selectedTag, tagModelWindow.getModalWindow());
 						tagModelWindow.show(page, target);
+					} catch (CirculoException e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			return link;
+		}
+
+		private AjaxLink<Void> getEditNoteButton() {
+
+			AjaxLink<Void> link = new AjaxLink<Void>("btnEditNote") {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onClick(AjaxRequestTarget target) {
+					try {
+						Page page = new circulo.circulo_view.note.Note(
+								selectedTag, selectedNote,
+								noteModelWindow.getModalWindow());
+						noteModelWindow.show(page, target);
 					} catch (CirculoException e) {
 						e.printStackTrace();
 					}
@@ -187,6 +271,25 @@ public class Notes extends CirculoPage {
 					} catch (Exception e) {
 						Logger.getLogger(this.getClass()).error(
 								"error creating user");
+					}
+				}
+			};
+		}
+
+		private CirculoModalWindow getNoteModelWindow() {
+			final ModalWindow modalWindow = new ModalWindow("noteForm");
+			return new CirculoModalWindow(modalWindow, "Note Form") {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onClose(AjaxRequestTarget target) {
+					try {
+						noteDDC.setChoices(getNotes(true));
+						target.add(noteDDC);
+					} catch (Exception e) {
+						Logger.getLogger(this.getClass()).error(
+								"error creating note");
 					}
 				}
 			};
@@ -216,6 +319,7 @@ public class Notes extends CirculoPage {
 				private static final long serialVersionUID = 1L;
 
 				protected void onUpdate(AjaxRequestTarget target) {
+					noteDDC.setChoices(getNotes(true));
 					target.add(noteDDC);
 				}
 			});
@@ -228,18 +332,13 @@ public class Notes extends CirculoPage {
 
 				@Override
 				public List<Note> getObject() {
-					List<Note> notes = new ArrayList<Note>();
-					if (selectedTag != null) {
-						notes = Arrays.asList(selectedTag.getNotes().toArray(
-								new Note[] {}));
-					}
-					return notes;
+					return getNotes(true);
 				}
 
 			};
-			DropDownChoice<Note> tagDDC = new DropDownChoice<Note>("note",
+			DropDownChoice<Note> noteDDC = new DropDownChoice<Note>("note",
 					new PropertyModel<Note>(this, "selectedNote"), notesModel);
-			tagDDC.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+			noteDDC.add(new AjaxFormComponentUpdatingBehavior("onchange") {
 				private static final long serialVersionUID = 1L;
 
 				protected void onUpdate(AjaxRequestTarget target) {
@@ -247,7 +346,7 @@ public class Notes extends CirculoPage {
 					System.out.println("chorizo" + selectedNote);
 				}
 			});
-			return tagDDC;
+			return noteDDC;
 		}
 	}
 }

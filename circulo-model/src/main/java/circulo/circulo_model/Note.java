@@ -23,6 +23,20 @@ public class Note implements Serializable {
 	private Set<Tag> tags = new HashSet<Tag>();
 	private String content;
 	private Date createdOn;
+	private Date modifiedOn;
+
+	@Override
+	public int hashCode() {
+		return id;
+	}
+
+	@Override
+	public boolean equals(Object arg0) {
+		if (arg0 == null || !arg0.getClass().equals(getClass()))
+			return false;
+
+		return id == ((Note) arg0).getId();
+	}
 
 	@Column(nullable = false)
 	public Date getCreatedOn() {
@@ -41,8 +55,6 @@ public class Note implements Serializable {
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-
-	private Date modifiedOn;
 
 	public String getContent() {
 		return content;

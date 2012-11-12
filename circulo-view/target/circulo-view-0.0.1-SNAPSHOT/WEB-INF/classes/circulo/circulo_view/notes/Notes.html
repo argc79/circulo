@@ -30,10 +30,12 @@
 									<td>
 										<h3>Note:</h3>
 										<div>
-											<select class="selectList" wicket:id="note" size="8"  style="width:200px"/>
+											<select wicket:id="note" class="selectList" size="8"  style="width:200px"/>
 											<br/>
-											<input class="button" type="submit" value="New"/>
-											<input class="button" type="submit" value="Edit"/>
+											<div wicket:id="noteForm"></div>
+											<a wicket:id="btnNewNote">New</a>
+											<a wicket:id="btnEditNote">Edit</a>
+											<a wicket:id="btnDeleteNote">Delete</a>
 										</div>
 										<br/>
 									</td>

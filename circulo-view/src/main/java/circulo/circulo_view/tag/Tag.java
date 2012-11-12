@@ -1,7 +1,6 @@
 package circulo.circulo_view.tag;
 
 import org.apache.log4j.Logger;
-import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -25,18 +24,17 @@ public class Tag extends CirculoCrudPage {
 
 	private static final long serialVersionUID = 1L;
 
-	public Tag(final PageReference modalWindowPage,
-			circulo.circulo_model.Tag tag, final ModalWindow window) {
+	public Tag(circulo.circulo_model.Tag selectedTag, final ModalWindow window) {
 		super(CrudType.EDIT);
 		add(new Label("version", getApplication().getFrameworkSettings()
 				.getVersion()));
 		add(new TagForm("TagForm",
-				new CompoundPropertyModel<circulo.circulo_model.Tag>(tag),
-				this, window));
+				new CompoundPropertyModel<circulo.circulo_model.Tag>(
+						selectedTag), this, window));
 
 	}
 
-	public Tag(final PageReference modalWindowPage, final ModalWindow window) {
+	public Tag(final ModalWindow window) {
 		super(CrudType.NEW);
 		add(new Label("version", getApplication().getFrameworkSettings()
 				.getVersion()));
