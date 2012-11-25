@@ -28,8 +28,7 @@ public final class NoteController extends BaseService<Integer, Note> {
 
 	@Override
 	public Note findByPrimaryKey(Integer pk) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		return getEntityManager().find(Note.class, pk);
 	}
 
 	@SuppressWarnings("unchecked")
