@@ -2,17 +2,18 @@ package circulo.circulo_view.notes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
@@ -28,6 +29,10 @@ import circulo.circulo_view.framework.common.CirculoException;
 import circulo.circulo_view.framework.common.CirculoForm;
 import circulo.circulo_view.framework.common.CirculoModalWindow;
 import circulo.circulo_view.framework.common.CirculoPage;
+
+import com.visural.wicket.component.nicedit.RichTextEditor;
+import com.visural.wicket.component.nicedit.RichTextEditorFormBehavior;
+import com.visural.wicket.component.submitters.IndicateRefreshAjaxSubmitLink;
 
 public class Notes extends CirculoPage {
 
@@ -55,9 +60,9 @@ public class Notes extends CirculoPage {
 		private final AjaxLink<Void> newNoteButton;
 		private final AjaxLink<Void> editNoteButton;
 		private final AjaxLink<Void> deleteNoteButton;
+		private final RichTextEditor<String> noteContent;
 
-		final TextArea<String> address;
-		private final Button saveWicket;
+		final IndicateRefreshAjaxSubmitLink saveNote;
 
 		public NotesMainForm(String id, CirculoPage parent) {
 			super(id, parent);
@@ -77,19 +82,8 @@ public class Notes extends CirculoPage {
 			deleteNoteButton = getDeleteNoteButton();
 			noteModelWindow = getNoteModelWindow();
 
-			// TODO start of refactor
-			saveWicket = new Button("saveWicket") {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void onSubmit() {
-					System.out.println(address.getValue());
-				}
-			};
-			address = new TextArea<String>("noteContent", Model.of(""));
-			add(address);
-			add(saveWicket);
-			// TODO end of refactor
+			saveNote = getSaveNoteButton();
+			noteContent = getNoteContentEditor();
 
 			add(feedback);
 			add(tagDDC);
@@ -102,6 +96,9 @@ public class Notes extends CirculoPage {
 			add(editNoteButton);
 			add(deleteNoteButton);
 			add(noteDDC);
+			add(new RichTextEditorFormBehavior());
+			add(noteContent.setOutputMarkupId(true));
+			add(saveNote);
 		}
 
 		private List<Note> getNotes(boolean refresh) {
@@ -295,6 +292,41 @@ public class Notes extends CirculoPage {
 			};
 		}
 
+		private IndicateRefreshAjaxSubmitLink getSaveNoteButton() {
+
+			IndicateRefreshAjaxSubmitLink link = new IndicateRefreshAjaxSubmitLink(
+					"saveNote") {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected Collection<? extends Component> getIndicateRefreshContainers() {
+					return null;
+				}
+
+				@Override
+				protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+					try {
+						NoteController controller = getController()
+								.getNoteController();
+						Note note = controller.findByPrimaryKey(selectedNote
+								.getId());
+						String content = noteContent.getModelObject();
+						selectedNote.setContent(content);
+						note.setContent(content);
+						controller.update(note);
+					} catch (ServiceException e) {
+						e.printStackTrace();
+					}
+
+				}
+
+				@Override
+				protected void onError(AjaxRequestTarget target, Form<?> form) {
+				}
+			};
+			return link;
+		}
+
 		public void selectedTag(Tag tag) {
 			selectedTag = tag;
 		}
@@ -338,15 +370,25 @@ public class Notes extends CirculoPage {
 			};
 			DropDownChoice<Note> noteDDC = new DropDownChoice<Note>("note",
 					new PropertyModel<Note>(this, "selectedNote"), notesModel);
+			noteDDC.setOutputMarkupId(true);
 			noteDDC.add(new AjaxFormComponentUpdatingBehavior("onchange") {
 				private static final long serialVersionUID = 1L;
 
 				protected void onUpdate(AjaxRequestTarget target) {
-					System.out.println("onchange");
-					System.out.println("chorizo" + selectedNote);
+					noteContent.setDefaultModelObject(selectedNote.getContent());
+					target.add(noteContent, noteContent.getMarkupId());
+					target.focusComponent(noteContent);
+					target.appendJavaScript("document.forms[0].submit();");
 				}
 			});
 			return noteDDC;
+		}
+
+		private RichTextEditor<String> getNoteContentEditor() {
+			RichTextEditor<String> retval = new RichTextEditor<String>(
+					"noteContent", Model.of(""));
+			retval.setMarkupId("noteContent");
+			return retval;
 		}
 	}
 }

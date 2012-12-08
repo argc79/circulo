@@ -10,6 +10,7 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
  * @see circulo.circulo_view.Start#main(String[])
  */
 public class WicketApplication extends WebApplication {
+
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */

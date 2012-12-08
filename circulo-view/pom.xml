@@ -79,6 +79,16 @@
 			<artifactId>wicket-spring</artifactId>
 			<version>${wicket.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.visural</groupId>
+			<artifactId>visural-common</artifactId>
+			<version>0.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.visural</groupId>
+			<artifactId>visural-wicket-w15</artifactId>
+			<version>0.7.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<resources>
@@ -168,6 +178,18 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		
+        <repository>
+            <id>visural-common</id>
+            <name>visural-common</name>
+            <url>http://visural-common.googlecode.com/svn/trunk/visural-common/maven/</url>
+        </repository>
+        
+        <repository>
+            <id>visural-wicket</id>
+            <name>visural-wicket</name>
+            <url>http://visural-wicket.googlecode.com/svn/trunk/visural-wicket/maven/</url>
+        </repository>
 	</repositories>
 
 </project>

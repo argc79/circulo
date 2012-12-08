@@ -2,8 +2,8 @@
 	
 		<!-- <wicket:border>  --><!-- Crear un border aparte para el login, y otro para la pantalla de que fue correcto o erroneo -->
 		<div id="bd" align="center">
-			<script src="nicEdit/nicEdit.js" type="text/javascript"></script>
-			<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>		
+			<!-- <script src="nicEdit/nicEdit.js" type="text/javascript"></script>
+			<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script> -->		
 			<h2>Notes</h2>
 			<form wicket:id="NotesMainForm" id="NotesMainForm" name="NotesMainForm" method="post" action="">
 				<div wicket:id="feedback"></div>
@@ -44,8 +44,10 @@
 						</td>
 						<td>
 							<div align="center">
-								<textarea wicket:id="noteContent" cols="50" rows="25" name="content"></textarea>
-								<input wicket:id="saveWicket" class="button" type="submit" value="submit"/>
+								<textarea style="width: 700px; height: 340px;" wicket:id="noteContent" id="noteContent"></textarea>
+								<!--<textarea wicket:id="noteContent" cols="50" rows="25" name="content"></textarea>-->
+								<a href="#" wicket:id="saveNote">Save Note</a>
+								<!-- <input wicket:id="saveWicket" class="button" type="submit" value="Save Note"/> -->
 							</div>
 						</td>
 					</tr>
