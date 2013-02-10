@@ -4,20 +4,21 @@ import java.util.List;
 
 import javax.ws.rs.PathParam;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import circulo.circulo_controller.ControllerProvider;
 
 abstract class Resource<T> {
-	final ControllerProvider controller;
+	ControllerProvider controller;
 
-	public Resource() {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext(
-				"applicationContext.xml");
-		System.out.println("El controller tiene este valor=" + ctx);
-		controller = (ControllerProvider) ctx.getBean("Controller");
+	public void setController(ControllerProvider controller) {
+		this.controller = controller;
 	}
+
+	// public Resource() {
+	// ApplicationContext ctx = new ClassPathXmlApplicationContext(
+	// "applicationContext.xml");
+	// System.out.println("El controller tiene este valor=" + ctx);
+	// controller = (ControllerProvider) ctx.getBean("Controller");
+	// }
 
 	public abstract List<T> findAll();
 
