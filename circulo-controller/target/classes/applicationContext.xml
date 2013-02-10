@@ -10,9 +10,11 @@
 		<property name="roleController" ref="RoleController"/>
 		<property name="tagController" ref="TagController"/>
 		<property name="noteController" ref="NoteController"/>
+		<property name="userController" ref="UserController"/>
 	</bean>
 	
 	<bean name="RoleController" class="circulo.circulo_controller.RoleController"/>
 	<bean name="TagController" class="circulo.circulo_controller.TagController"/>
 	<bean name="NoteController" class="circulo.circulo_controller.NoteController"/>
+	<bean name="UserController" class="circulo.circulo_controller.UserController"/>
 </beans>

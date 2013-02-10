@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Tag model class
@@ -19,6 +21,7 @@ import javax.persistence.NamedQuery;
  * @author Anibal
  * 
  */
+@XmlRootElement
 @Entity
 @NamedQuery(name = "findAllTags", query = "select t from Tag t")
 public class Tag implements Serializable {
@@ -41,6 +44,7 @@ public class Tag implements Serializable {
 	}
 
 	@ManyToMany(mappedBy = "tags", cascade = CascadeType.ALL)
+	@XmlTransient
 	public Set<Note> getNotes() {
 		return notes;
 	}

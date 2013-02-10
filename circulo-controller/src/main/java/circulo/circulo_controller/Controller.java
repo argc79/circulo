@@ -7,4 +7,5 @@ public interface Controller {
 
 	NoteController getNoteController();
 
+	UserController getUserController();
 }

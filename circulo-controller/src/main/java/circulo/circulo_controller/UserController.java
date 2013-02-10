@@ -40,8 +40,7 @@ public class UserController extends BaseService<Integer, Person> {
 
 	@Override
 	public Person findByPrimaryKey(Integer pk) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		return getEntityManager().find(Person.class, pk);
 	}
 
 	@SuppressWarnings("unchecked")
