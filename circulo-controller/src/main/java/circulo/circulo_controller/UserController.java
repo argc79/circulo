@@ -43,6 +43,12 @@ public class UserController extends BaseService<Integer, Person> {
 		return getEntityManager().find(Person.class, pk);
 	}
 
+	public Person findByName(String name) throws ServiceException {
+		final Query query = getQuery("findByUserName");
+		query.setParameter("userName", name);
+		return (Person) query.getSingleResult();
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Person> findAll() throws ServiceException {
