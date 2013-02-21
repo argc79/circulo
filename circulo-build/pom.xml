@@ -25,6 +25,12 @@
     	<groupId>circulo</groupId>
     	<artifactId>circulo-security</artifactId>
     	<version>0.0.1-SNAPSHOT</version>
+    	<!-- <exclusions>
+    		<exclusion>
+    			<artifactId>spring-web</artifactId>
+    			<groupId>org.springframework</groupId>
+    		</exclusion>
+    	</exclusions>-->
     </dependency>
   </dependencies>
 </project>

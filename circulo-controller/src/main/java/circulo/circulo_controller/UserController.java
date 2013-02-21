@@ -46,7 +46,13 @@ public class UserController extends BaseService<Integer, Person> {
 	public Person findByName(String name) throws ServiceException {
 		final Query query = getQuery("findByUserName");
 		query.setParameter("userName", name);
-		return (Person) query.getSingleResult();
+		final Person retval;
+		try {
+			retval = (Person) query.getSingleResult();
+		} catch (NoResultException nre) {
+			throw new ServiceException("No result", nre);
+		}
+		return retval;
 	}
 
 	@SuppressWarnings("unchecked")

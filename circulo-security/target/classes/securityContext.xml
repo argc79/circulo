@@ -9,20 +9,19 @@
 		   
 	<import resource="classpath:resourceControllerContext.xml"/>
 	
-	<security:http auto-config='true'>
-    	<security:intercept-url pattern="/**" access="ROLE_USER" />
-  	</security:http>
-  
-  
+	<security:http auto-config="true">
+		<!-- IMPORTANT!!!! Disabled for testing purposes -->
+		<!-- <security:intercept-url pattern="/index.html" access="ROLE_USER" /> -->
+		<security:intercept-url pattern="/welcome*" access="ROLE_USER" />
+		<!-- IMPORTANT!!!! Disabled for testing purposes -->
+		<!-- <security:intercept-url pattern="/rest/**" access="ROLE_USER" /> -->
+		<security:form-login login-page="/login.do" default-target-url="/welcome.do"
+					authentication-failure-url="/loginfailed.do" />
+		<security:logout logout-success-url="/logout.do" />
+	</security:http>
+	
     <security:authentication-manager>
     	<security:authentication-provider user-service-ref="circuloAuthenticationService" />
-    	<!-- <security:authentication-provider ref="circuloAuthenticationProvider"/>-->
-    	<!-- <authentication-provider>
-      		<user-service>
-        		<user name="jimi" password="jimispassword" authorities="ROLE_USER, ROLE_ADMIN" />
-        		<user name="bob" password="bobspassword" authorities="ROLE_USER" />
-      		</user-service>
-    	</authentication-provider> -->
 	</security:authentication-manager>
 	
 	<bean id="circuloAuthenticationService" class="circulo.circulo_security.authentication.CirculoAuthenticationService">
