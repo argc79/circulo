@@ -58,6 +58,7 @@ public class Note implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
+	@Column(length = 10485760)
 	public String getContent() {
 		return content;
 	}

@@ -1,0 +1,72 @@
+<div class="row">
+
+    <form class="form-horizontal span12">
+        
+        <fieldset>
+
+            <legend>Note Details</legend>
+            <br/>
+
+            <div class="row">
+                <div class="span9">
+
+                    <div class="control-group">
+                        <label for="id" class="control-label">Id:</label>
+
+                        <div class="controls">
+                            <input id="id" name="id" type="text" value="<%= id == null? '' : id %>" class="span1"
+                                   disabled/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="subject" class="control-label">Subject:</label>
+
+                        <div class="controls">
+                            <input type="text" id="subject" name="subject" value="<%= subject %>"/>
+                            <span class="help-inline"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="subject" class="control-label">Content:</label>
+
+                        <div class="controls">
+
+                            <textarea id="content" name="content" data="<%= content %>"></textarea>                            
+                            <script type="text/javascript">
+                                CKEDITOR.replace("content");
+                                CKEDITOR.instances.content.setData(currentContent);                                
+                            </script>
+                            <!-- This retrieves the data from the json model and put it into
+                            the global currentContent variable-->
+                            <% $(document).ready(function() {                                
+                                currentContent = content;
+                            })%>
+                            <span class="help-inline"></span>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+
+        </fieldset>
+
+        <div class="form-actions">
+            <a href="#" class="btn btn-primary save">Save</a>
+            <a href="#" class="btn delete">Delete</a>
+        </div>
+
+    </form>
+
+</div>
+
+<div class="row status-bar">
+    <div class="span12">
+        <div class="alert alert-success" style="display: none">
+            <b>Success!</b> Note saved successfully
+        </div>
+    </div>
+</div>
+
+

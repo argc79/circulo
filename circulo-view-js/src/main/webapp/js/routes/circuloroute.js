@@ -9,6 +9,10 @@ var AppRouter = Backbone.Router.extend({
         "tags/page/:page"     : "listTag",
         "tags/add"            : "addTag",
         "tags/:id"            : "tagDetails",
+        "notes/list"           : "listNote",
+        "notes/page/:page"     : "listNote",
+        "notes/add"            : "addNote",
+        "notes/:id"            : "noteDetails",
 	},
 
     initialize: function () {
@@ -20,7 +24,7 @@ var AppRouter = Backbone.Router.extend({
         var p = page ? parseInt(page, 10) : 1;
         var userList = new UserCollection();
         userList.fetch({success: function(){
-            $("#content").html(new UserListView({model: userList, page: p}).el);
+            $("#content-app").html(new UserListView({model: userList, page: p}).el);
         }});
         this.headerView.selectMenuItem('add-menu-user');
     },
@@ -28,14 +32,14 @@ var AppRouter = Backbone.Router.extend({
     userDetails: function (id) {
         var user = new User({id: id});
         user.fetch({success: function(){
-            $("#content").html(new UserView({model: user}).el);
+            $("#content-app").html(new UserView({model: user}).el);
         }});
         this.headerView.selectMenuItem();
     },
 
     addUser: function() {
         var user = new User();
-        $('#content').html(new UserView({model: user}).el);
+        $('#content-app').html(new UserView({model: user}).el);
         this.headerView.selectMenuItem('add-menu-user');
     },
 
@@ -43,7 +47,7 @@ var AppRouter = Backbone.Router.extend({
         var p = page ? parseInt(page, 10) : 1;
         var tagList = new TagCollection();
         tagList.fetch({success: function(){
-            $("#content").html(new TagListView({model: tagList, page: p}).el);
+            $("#content-app").html(new TagListView({model: tagList, page: p}).el);
         }});
         this.headerView.selectMenuItem('add-menu-tag');
     },
@@ -51,14 +55,37 @@ var AppRouter = Backbone.Router.extend({
     tagDetails: function (id) {
         var tag = new Tag({id: id});
         tag.fetch({success: function(){
-            $("#content").html(new TagView({model: tag}).el);
+            $("#content-app").html(new TagView({model: tag}).el);
         }});
         this.headerView.selectMenuItem();
     },
 
     addTag: function() {
         var tag = new Tag();
-        $('#content').html(new TagView({model: tag}).el);
+        $('#content-app').html(new TagView({model: tag}).el);
         this.headerView.selectMenuItem('add-menu-tag');
+    },
+
+    listNote: function(page) {
+        var p = page ? parseInt(page, 10) : 1;
+        var noteList = new NoteCollection();
+        noteList.fetch({success: function(){
+            $("#content-app").html(new NoteListView({model: noteList, page: p}).el);
+        }});
+        this.headerView.selectMenuItem('add-menu-note');
+    },
+
+    noteDetails: function (id) {
+        var note = new Note({id: id});
+        note.fetch({success: function(){
+            $("#content-app").html(new NoteView({model: note}).el);
+        }});
+        this.headerView.selectMenuItem();
+    },
+
+    addNote: function() {
+        var note = new Note();
+        $('#content-app').html(new NoteView({model: note}).el);
+        this.headerView.selectMenuItem('add-menu-note');
     }
 });

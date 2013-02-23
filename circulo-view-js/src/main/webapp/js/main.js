@@ -1,9 +1,9 @@
-utils.loadTemplate(['UserListItemView', 'UserView', 'HeaderView', 'TagListItemView', 'TagView'], function() {
+utils.loadTemplate(['UserListItemView', 'UserView', 'HeaderView', 'TagListItemView', 'TagView', 'NoteView', 'NoteListItemView'], function() {
     app = new AppRouter();    
     Backbone.history.start();
 });
 
-/*$.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
+$.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
   // Modify options, control originalOptions, store jqXHR, etc
   options.url = "http://localhost:8080/circulo/" + options.url;
-});*/
+});
