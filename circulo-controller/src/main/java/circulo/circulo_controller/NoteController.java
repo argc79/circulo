@@ -38,4 +38,8 @@ public final class NoteController extends BaseService<Integer, Note> {
 		return query.getResultList();
 	}
 
+	// public List<Note> findByName(String userName) throws ServiceException {
+	// Query query = getQuery("");
+	// }
+
 }

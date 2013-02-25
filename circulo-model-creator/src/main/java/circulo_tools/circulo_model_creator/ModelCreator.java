@@ -46,6 +46,7 @@ public class ModelCreator {
 		note.setCreatedOn(new Date());
 		note.setModifiedOn(new Date());
 		note.setContent("");
+		note.setPerson(user);
 
 		Set<Note> notes = new HashSet<Note>();
 		Set<Tag> tags = new HashSet<Tag>();

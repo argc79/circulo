@@ -12,8 +12,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 @Entity
@@ -26,6 +28,7 @@ public class Note implements Serializable {
 	private String content;
 	private Date createdOn;
 	private Date modifiedOn;
+	private Person person;
 
 	@Override
 	public int hashCode() {
@@ -93,6 +96,16 @@ public class Note implements Serializable {
 
 	public void setTags(Set<Tag> tags) {
 		this.tags = tags;
+	}
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@XmlTransient
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 	@Override

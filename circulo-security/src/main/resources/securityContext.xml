@@ -11,10 +11,10 @@
 	
 	<security:http auto-config="true">
 		<!-- IMPORTANT!!!! Disabled for testing purposes -->
-		<!-- <security:intercept-url pattern="/index.html" access="ROLE_USER" /> -->
+		<security:intercept-url pattern="/index.html" access="ROLE_USER" />
 		<security:intercept-url pattern="/welcome*" access="ROLE_USER" />
 		<!-- IMPORTANT!!!! Disabled for testing purposes -->
-		<!-- <security:intercept-url pattern="/rest/**" access="ROLE_USER" /> -->
+		<security:intercept-url pattern="/rest/**" access="ROLE_USER" />
 		<security:form-login login-page="/login.do" default-target-url="/welcome.do"
 					authentication-failure-url="/loginfailed.do" />
 		<security:logout logout-success-url="/logout.do" />

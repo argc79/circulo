@@ -10,7 +10,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.SecurityContext;
 
 import circulo.circulo_controller.ServiceException;
 import circulo.circulo_model.Person;
@@ -21,7 +23,7 @@ public class UserResource extends Resource<Person> {
 	@Override
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Person> findAll() {
+	public List<Person> findAll(@Context SecurityContext sec) {
 		try {
 			return controller.getUserController().findAll();
 		} catch (ServiceException e) {
@@ -58,7 +60,7 @@ public class UserResource extends Resource<Person> {
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Person create(Person t) {
+	public Person create(@Context SecurityContext sec, Person t) {
 		try {
 			controller.getUserController().create(t);
 			return t;

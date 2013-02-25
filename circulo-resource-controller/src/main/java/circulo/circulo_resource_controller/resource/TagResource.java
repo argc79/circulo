@@ -10,7 +10,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.SecurityContext;
 
 import circulo.circulo_controller.ServiceException;
 import circulo.circulo_model.Tag;
@@ -21,7 +23,7 @@ public class TagResource extends Resource<Tag> {
 	@Override
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Tag> findAll() {
+	public List<Tag> findAll(@Context SecurityContext sec) {
 		try {
 			return controller.getTagController().findAll();
 		} catch (ServiceException e) {
@@ -59,7 +61,7 @@ public class TagResource extends Resource<Tag> {
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Tag create(Tag t) {
+	public Tag create(@Context SecurityContext sec, Tag t) {
 		try {
 			controller.getTagController().create(t);
 			return t;

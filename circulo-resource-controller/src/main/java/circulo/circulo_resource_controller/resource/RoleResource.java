@@ -10,7 +10,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.SecurityContext;
 
 import circulo.circulo_controller.ServiceException;
 import circulo.circulo_model.Role;
@@ -21,7 +23,7 @@ public class RoleResource extends Resource<Role> {
 	@Override
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Role> findAll() {
+	public List<Role> findAll(@Context SecurityContext sec) {
 		try {
 			return controller.getRoleController().findAll();
 		} catch (ServiceException e) {
@@ -59,7 +61,7 @@ public class RoleResource extends Resource<Role> {
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Role create(Role t) {
+	public Role create(@Context SecurityContext sec, Role t) {
 		try {
 			controller.getRoleController().create(t);
 			return t;

@@ -1,6 +1,7 @@
 package circulo.circulo_model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -26,6 +28,16 @@ public class Person implements Serializable {
 	private String password;
 	private String email;
 	private Role role;
+	private List<Note> notes;
+
+	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+	public List<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
+	}
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@XmlTransient

@@ -3,6 +3,8 @@ package circulo.circulo_resource_controller.resource;
 import java.util.List;
 
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.SecurityContext;
 
 import circulo.circulo_controller.ControllerProvider;
 
@@ -20,13 +22,13 @@ abstract class Resource<T> {
 	// controller = (ControllerProvider) ctx.getBean("Controller");
 	// }
 
-	public abstract List<T> findAll();
+	public abstract List<T> findAll(@Context SecurityContext sec);
 
 	public abstract List<T> findByName(@PathParam("query") String query);
 
 	public abstract T findById(@PathParam("id") String id);
 
-	public abstract T create(T t);
+	public abstract T create(@Context SecurityContext sec, T t);
 
 	public abstract T update(T t);
 
