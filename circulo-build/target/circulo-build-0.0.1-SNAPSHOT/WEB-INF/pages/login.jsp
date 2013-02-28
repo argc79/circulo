@@ -2,55 +2,62 @@
 <html>
 <head>
 <title>Login Page</title>
-<!-- <style>
-.errorblock {
-	color: #ff0000;
-	background-color: #ffEEEE;
-	border: 3px solid #ff0000;
-	padding: 8px;
-	margin: 16px;
-}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
 
-</style>-->
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/styles.css" rel="stylesheet">
-<link href="css/docs.css" rel="stylesheet">
+      .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+</style>
+
 </head>
 <body onload='document.f.j_username.focus();'>
-	<h3>Login with Username and Password (Custom Page)</h3>
-
 	<c:if test="${not empty error}">
-		<div class="errorblock">
-			Your login attempt was not successful, try again.<br /> Caused :
+		<div class="errorblock alert alert-block alert-error fade in">
+  			<button type="button" class="close" data-dismiss="alert">&times;</button>
+  			<strong>Error!</strong> Your login attempt was not successful, try again.<br /> Caused :
 			${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
 		</div>
 	</c:if>
-
-	<form name='f' action="<c:url value='j_spring_security_check' />"
-		method='POST'>
-
-		<table>
-			<tr>
-				<td>User:</td>
-				<td><div class="controls"><input type='text' name='j_username' value=''></div>
-				</td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-				<td><div class="controls"><input type='password' name='j_password' /></div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan='2'><input name="submit" type="submit"
-					value="submit" />
-				</td>
-			</tr>
-			<tr>
-				<td colspan='2'><input name="reset" type="reset" />
-				</td>
-			</tr>
-		</table>
-
-	</form>
+	
+	<div class="container">
+		<form name='f' action="<c:url value='j_spring_security_check' />"
+			method='POST' class="form-signin">
+			
+			<h2 class="form-signin-heading">Please sign in</h2>
+			<input type='text' name='j_username' value='' class="input-block-level" placeholder="User">
+			<input type='password' name='j_password' class="input-block-level" placeholder="Password"/>
+			<input name="submit" type="submit"  class="btn btn-large btn-primary" value="Submit" />
+		</form>
+	</div>
+	<script src="lib/jquery.js"></script>
+	<script src="lib/bootstrap.js"></script>
 </body>
 </html>

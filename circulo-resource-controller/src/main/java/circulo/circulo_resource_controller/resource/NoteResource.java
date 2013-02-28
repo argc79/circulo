@@ -10,8 +10,13 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.SecurityContext;
 
 import circulo.circulo_controller.ServiceException;
@@ -24,17 +29,33 @@ public class NoteResource extends Resource<Note> {
 	@Override
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Note> findAll(@Context SecurityContext sec) {
+	public Response findAll(@Context SecurityContext sec,
+			@Context Request request) {
 		try {
-			System.out.println("The authenticated user is "
-					+ sec.getUserPrincipal().getName());
 			Person person = controller.getUserController().findByName(
 					sec.getUserPrincipal().getName());
-			return person.getNotes();
+			List<Note> notes = person.getNotes();// controller.getNoteController().findAll();
+
+			EntityTag tag = new EntityTag(Integer.toString(notes.hashCode()));
+			CacheControl cc = getCache(1000);
+			ResponseBuilder builder = request.evaluatePreconditions(tag);
+			if (builder != null) {
+				builder.cacheControl(cc);
+				return builder.build();
+			}
+			return getResponseOk(notes, tag, cc);
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
 		return null;
+		// try {
+		// Person person = controller.getUserController().findByName(
+		// sec.getUserPrincipal().getName());
+		// return person.getNotes();
+		// } catch (ServiceException e) {
+		// e.printStackTrace();
+		// }
+		// return null;
 	}
 
 	@Override
