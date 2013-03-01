@@ -20,6 +20,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @Entity
 @NamedQuery(name = "findAllNotes", query = "select n from Note n")
+// @NamedNativeQuery(name = "findNotesList", query =
+// "SELECT  note.subject FROM `note`, `person` WHERE note.person_id = person.id and person.username = :userName")
+// @NamedQuery(name = "findNotesList", query =
+// "SELECT  new circulo.circulo_model.result.LightNoteListResult(c.id, c.subject, c.createdOn, c.modifiedOn) FROM Note c, Person p WHERE c.id = p.id and p.userName = :userName")
 public class Note implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;

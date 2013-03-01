@@ -97,7 +97,7 @@ public class RoleResource extends Resource<Role> {
 	@Path("{id}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Role update(Role t) {
+	public Role update(@Context SecurityContext sec, Role t) {
 		try {
 			controller.getRoleController().update(t);
 		} catch (ServiceException e) {

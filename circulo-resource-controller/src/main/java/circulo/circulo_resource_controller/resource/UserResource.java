@@ -91,7 +91,7 @@ public class UserResource extends Resource<Person> {
 	@Path("{id}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Person update(Person t) {
+	public Person update(@Context SecurityContext sec, Person t) {
 		try {
 			controller.getUserController().update(t);
 		} catch (ServiceException e) {

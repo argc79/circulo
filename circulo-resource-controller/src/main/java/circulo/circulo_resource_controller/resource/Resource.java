@@ -50,7 +50,7 @@ abstract class Resource<T> {
 
 	public abstract T create(@Context SecurityContext sec, T t);
 
-	public abstract T update(T t);
+	public abstract T update(@Context SecurityContext sec, T t);
 
 	public abstract void remove(@PathParam("id") int id);
 }

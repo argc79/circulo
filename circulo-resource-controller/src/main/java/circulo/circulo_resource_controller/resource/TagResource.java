@@ -97,7 +97,7 @@ public class TagResource extends Resource<Tag> {
 	@Path("{id}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Tag update(Tag t) {
+	public Tag update(@Context SecurityContext sec, Tag t) {
 		try {
 			controller.getTagController().update(t);
 		} catch (ServiceException e) {

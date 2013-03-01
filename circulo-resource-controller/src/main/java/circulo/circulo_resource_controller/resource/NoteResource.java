@@ -1,5 +1,7 @@
 package circulo.circulo_resource_controller.resource;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -21,7 +23,6 @@ import javax.ws.rs.core.SecurityContext;
 
 import circulo.circulo_controller.ServiceException;
 import circulo.circulo_model.Note;
-import circulo.circulo_model.Person;
 
 @Path("notes")
 public class NoteResource extends Resource<Note> {
@@ -32,9 +33,18 @@ public class NoteResource extends Resource<Note> {
 	public Response findAll(@Context SecurityContext sec,
 			@Context Request request) {
 		try {
-			Person person = controller.getUserController().findByName(
+			List<?> results = controller.getNoteController().findNotesList(
 					sec.getUserPrincipal().getName());
-			List<Note> notes = person.getNotes();// controller.getNoteController().findAll();
+			List<Note> notes = new ArrayList<Note>();
+			for (int i = 0; i < results.size(); i++) {
+				Object[] line = (Object[]) results.get(i);
+				Note note = new Note();
+				note.setId((Integer) line[0]);
+				note.setSubject((String) line[1]);
+				note.setCreatedOn((Date) line[2]);
+				note.setModifiedOn((Date) line[3]);
+				notes.add(note);
+			}
 
 			EntityTag tag = new EntityTag(Integer.toString(notes.hashCode()));
 			CacheControl cc = getCache(1000);
@@ -48,14 +58,6 @@ public class NoteResource extends Resource<Note> {
 			e.printStackTrace();
 		}
 		return null;
-		// try {
-		// Person person = controller.getUserController().findByName(
-		// sec.getUserPrincipal().getName());
-		// return person.getNotes();
-		// } catch (ServiceException e) {
-		// e.printStackTrace();
-		// }
-		// return null;
 	}
 
 	@Override
@@ -103,8 +105,10 @@ public class NoteResource extends Resource<Note> {
 	@Path("{id}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Note update(Note t) {
+	public Note update(@Context SecurityContext sec, Note t) {
 		try {
+			t.setPerson(controller.getUserController().findByName(
+					sec.getUserPrincipal().getName()));
 			controller.getNoteController().update(t);
 		} catch (ServiceException e) {
 			e.printStackTrace();
