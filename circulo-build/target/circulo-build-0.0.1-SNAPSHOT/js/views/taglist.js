@@ -16,7 +16,7 @@ window.TagListView = Backbone.View.extend({
             $('.thumbnails', this.el).append(new TagListItemView({model: tags[i]}).render().el);
         }
 
-        $(this.el).append(new Paginator({model: this.model, page: this.options.page}).render().el);
+        $(this.el).append(new Paginator({model: this.model, page: this.options.page, entityname: 'tags'}).render().el);
 
         return this;
     }

@@ -16,7 +16,7 @@ window.NoteListView = Backbone.View.extend({
             $('.thumbnails', this.el).append(new NoteListItemView({model: notes[i]}).render().el);
         }
 
-        $(this.el).append(new Paginator({model: this.model, page: this.options.page}).render().el);
+        $(this.el).append(new Paginator({model: this.model, page: this.options.page, entityname: 'notes'}).render().el);
 
         return this;
     }

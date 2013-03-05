@@ -1,6 +1,6 @@
 var AppRouter = Backbone.Router.extend({
 	routes: {
-		""                    : "listUser" ,
+		""                    : "listNote" ,
         "users/list"          : "listUser",
         "users/page/:page"    : "listUser",
         "users/add"           : "addUser",
@@ -17,6 +17,8 @@ var AppRouter = Backbone.Router.extend({
 
     initialize: function () {
         this.headerView = new HeaderView();
+        this.navigationView = new NavigationView();
+        $('.navigation').html(this.navigationView.el);
         $('.header').html(this.headerView.el);
     },
     
@@ -45,11 +47,15 @@ var AppRouter = Backbone.Router.extend({
 
     listTag: function(page) {
         var p = page ? parseInt(page, 10) : 1;
-        var tagList = new TagCollection();
-        tagList.fetch({success: function(){
+        var tagList = new TagCollection();    
+        tagList.comparator = function(tag){
+            return tag.get("name");
+        };    
+        tagList.fetch({success: function(){            
             $("#content-app").html(new TagListView({model: tagList, page: p}).el);
         }});
-        this.headerView.selectMenuItem('add-menu-tag');
+        this.navigationView.selectMenuItem('tags');
+        this.headerView.selectMenuItem('home');
     },
 
     tagDetails: function (id) {
@@ -69,10 +75,13 @@ var AppRouter = Backbone.Router.extend({
     listNote: function(page) {
         var p = page ? parseInt(page, 10) : 1;
         var noteList = new NoteCollection();
-        noteList.fetch({success: function(){
+
+        //var navigationView = new NavigationView();
+        noteList.fetch({success: function(){        
             $("#content-app").html(new NoteListView({model: noteList, page: p}).el);
-        }});
-        this.headerView.selectMenuItem('add-menu-note');
+        }}); 
+        this.navigationView.selectMenuItem('notes');                          
+        this.headerView.selectMenuItem('home');       
     },
 
     noteDetails: function (id) {
@@ -85,6 +94,8 @@ var AppRouter = Backbone.Router.extend({
 
     addNote: function() {
         var note = new Note();
+        //$("#navigation").html(null);
+        this.navigationView.hideNavigation();
         $('#content-app').html(new NoteView({model: note}).el);
         this.headerView.selectMenuItem('add-menu-note');
     }

@@ -9,10 +9,6 @@
 
 	<context:component-scan base-package="circulo.circulo_security.common.controller" />
 
-	<!-- <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" p:interceptors-ref="disableBrowserCaching" />
-
-	<bean id="disableBrowserCaching" class="circulo.circulo_security.cache.DisableBrowserCachingInterceptor"/>-->
-		
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
 			<value>/WEB-INF/pages/</value>

@@ -16,7 +16,7 @@ window.UserListView = Backbone.View.extend({
             $('.thumbnails', this.el).append(new UserListItemView({model: users[i]}).render().el);
         }
 
-        $(this.el).append(new Paginator({model: this.model, page: this.options.page}).render().el);
+        $(this.el).append(new Paginator({model: this.model, page: this.options.page, entityname: 'users'}).render().el);
 
         return this;
     }
