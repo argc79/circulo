@@ -1,4 +1,4 @@
-window.Note = window.Model.extend({
+circulo.Note = circulo.Model.extend({
 	urlRoot: "rest/notes",
 
 	initialize: function(){
@@ -18,7 +18,7 @@ window.Note = window.Model.extend({
 	}
 });
 
-window.NoteCollection = Backbone.Collection.extend({
-	model: Note,
+circulo.NoteCollection = Backbone.Collection.extend({
+	model: circulo.Note,
 	url: "rest/notes"
 });

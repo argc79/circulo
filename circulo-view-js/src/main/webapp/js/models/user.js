@@ -1,4 +1,4 @@
-window.User = window.Model.extend({
+circulo.User = circulo.Model.extend({
 	urlRoot: "rest/users",
 
     initialize: function () {
@@ -25,7 +25,7 @@ window.User = window.Model.extend({
     }
 });
 
-window.UserCollection = Backbone.Collection.extend({
-	model:User,
+circulo.UserCollection = Backbone.Collection.extend({
+	model:circulo.User,
 	url: "rest/users"
 });
