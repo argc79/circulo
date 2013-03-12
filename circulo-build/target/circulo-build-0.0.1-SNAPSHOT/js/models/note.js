@@ -1,4 +1,4 @@
-window.Note = window.Model.extend({
+circulo.Note = circulo.Model.extend({
 	urlRoot: "rest/notes",
 
 	initialize: function(){
@@ -14,11 +14,15 @@ window.Note = window.Model.extend({
 		subject: "",
 		content: "",
 		createdOn: "1979-11-17",
-		modifiedOn: "1979-11-17"
+		modifiedOn: "1979-11-17",
+		tags: [{
+			id: null,
+			name: ""
+		}]
 	}
 });
 
-window.NoteCollection = Backbone.Collection.extend({
-	model: Note,
+circulo.NoteCollection = Backbone.Collection.extend({
+	model: circulo.Note,
 	url: "rest/notes"
 });

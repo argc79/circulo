@@ -87,17 +87,24 @@ circulo.AppRouter = Backbone.Router.extend({
 
     noteDetails: function (id) {
         var note = new circulo.Note({id: id});
+        var tagList = new circulo.TagCollection();
         note.fetch({success: function(){
-            $("#content-app").html(new NoteView({model: note}).el);
+            tagList.fetch({success: function(){
+                $("#content-app").html(new NoteView({model: note, tags: tagList}).el);            
+            }});
         }});
         this.headerView.selectMenuItem();
     },
 
     addNote: function() {
         var note = new circulo.Note();
+        var tagList = new circulo.TagCollection();
         //$("#navigation").html(null);
         this.navigationView.hideNavigation();
-        $('#content-app').html(new NoteView({model: note}).el);
+        tagList.fetch({success: function(){
+            $("#content-app").html(new NoteView({model: note, tags: tagList}).el);            
+        }});
+        // $('#content-app').html(new NoteView({model: note}).el);
         this.headerView.selectMenuItem('add-menu-note');
     }
 });

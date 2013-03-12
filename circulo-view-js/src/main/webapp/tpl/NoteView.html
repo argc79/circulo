@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="span9">
 
-                    <div class="control-group">
+                    <div class="control-group hide"><!-- hide -->
                         <label for="id" class="control-label">Id:</label>
 
                         <div class="controls">
@@ -26,6 +26,54 @@
                             <input type="text" id="subject" name="subject" value="<%= subject %>"/>
                             <span class="help-inline"></span>
                         </div>
+                    </div>
+                    <div class="control-group" >
+                        <label for="ms-filter" class="control-label">Tags:</label>
+
+                        <div id="tags-available" class="controls">                        
+                            <!-- <div id="ms-filter"></div> -->
+                            <input id="ms-filter" style="width:150px;" type="text"/>
+                            <!-- Modal -->
+                            <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h3 id="myModalLabel">Select Tags</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td><h5>Tag name</h5></td>
+                                                <td><h5>Select</h5></td>
+                                            </tr>                                            
+                                        </thead>
+                                        <tbody id="tags-table">
+                                            <!-- <tr>
+                                                <td>Java</td>
+                                                <td><input id="1" type="checkbox"/></td>
+                                            </tr>                       
+                                            <tr>
+                                                <td>Nintendo</td>
+                                                <td><input id="2" type="checkbox"/></td>
+                                            </tr> -->                       
+                                        </tbody>
+                                    </table>
+                                    <p>Or create a new one…</p>
+                                    <div class="control-group">
+                                        <label for="tag-name" class="control-label">Tag name:</label>
+                                        <div class="controls">
+                                            <input id="tag-name" name="tag-id" type="text"  />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                    <button class="btn btn-primary btn-save-tags">Add Tags</button>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                        </div>
+
                     </div>
                     <div class="control-group">
                         <label for="subject" class="control-label">Content:</label>
@@ -68,5 +116,3 @@
         </div>
     </div>
 </div>
-
-

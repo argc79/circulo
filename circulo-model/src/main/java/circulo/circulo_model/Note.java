@@ -93,7 +93,7 @@ public class Note implements Serializable {
 		this.subject = subject;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = { CascadeType.REFRESH, CascadeType.MERGE })
 	public Set<Tag> getTags() {
 		return tags;
 	}
@@ -102,7 +102,7 @@ public class Note implements Serializable {
 		this.tags = tags;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	@XmlTransient
 	public Person getPerson() {
 		return person;

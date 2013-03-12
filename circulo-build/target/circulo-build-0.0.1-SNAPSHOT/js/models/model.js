@@ -1,4 +1,4 @@
-window.Model = Backbone.Model.extend({
+circulo.Model = Backbone.Model.extend({
 	validateItem: function (key) {
         return (this.validators[key]) ? this.validators[key](this.get(key)) : {isValid: true};
     },

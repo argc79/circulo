@@ -110,7 +110,7 @@ public class TagResource extends Resource<Tag> {
 	@DELETE
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public void remove(int id) {
+	public void remove(@PathParam("id") int id) {
 		Tag tag;
 		try {
 			tag = controller.getTagController().findByPrimaryKey(id);

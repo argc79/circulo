@@ -14,7 +14,11 @@ circulo.Note = circulo.Model.extend({
 		subject: "",
 		content: "",
 		createdOn: "1979-11-17",
-		modifiedOn: "1979-11-17"
+		modifiedOn: "1979-11-17",
+		tags: [{
+			id: null,
+			name: ""
+		}]
 	}
 });
 

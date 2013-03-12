@@ -1,4 +1,4 @@
-window.Tag = window.Model.extend({
+circulo.Tag = circulo.Model.extend({
 	urlRoot: "rest/tags",
 
 	initialize: function(){
@@ -15,7 +15,7 @@ window.Tag = window.Model.extend({
 	}
 });
 
-window.TagCollection = Backbone.Collection.extend({
-	model: Tag,
+circulo.TagCollection = Backbone.Collection.extend({
+	model: circulo.Tag,
 	url: "rest/tags"
 });

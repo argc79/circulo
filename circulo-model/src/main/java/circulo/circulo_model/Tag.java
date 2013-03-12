@@ -43,7 +43,8 @@ public class Tag implements Serializable {
 		return id == ((Tag) arg0).getId();
 	}
 
-	@ManyToMany(mappedBy = "tags", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "tags", cascade = { CascadeType.REFRESH,
+			CascadeType.MERGE })
 	@XmlTransient
 	public Set<Note> getNotes() {
 		return notes;

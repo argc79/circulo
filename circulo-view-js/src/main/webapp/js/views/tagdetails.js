@@ -10,10 +10,10 @@ window.TagView = Backbone.View.extend({
     },
 
     events: {
-        "change"        : "change",
-        "click .save"   : "beforeSave",
-        "click .delete" : "deleteTag",
-        "drop #picture" : "dropHandler"
+        "change"            : "change",
+        "click .save"       : "beforeSave",
+        "click .delete"     : "deleteTag",
+        "drop #picture"     : "dropHandler"
     },
 
     change: function (event) {

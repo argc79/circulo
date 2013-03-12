@@ -3,6 +3,7 @@ package circulo.circulo_resource_controller.resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -23,6 +24,7 @@ import javax.ws.rs.core.SecurityContext;
 
 import circulo.circulo_controller.ServiceException;
 import circulo.circulo_model.Note;
+import circulo.circulo_model.Tag;
 
 @Path("notes")
 public class NoteResource extends Resource<Note> {
@@ -90,6 +92,15 @@ public class NoteResource extends Resource<Note> {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Note create(@Context SecurityContext sec, Note t) {
 		try {
+			Set<Tag> tags = t.getTags();
+			for (Tag tag : tags) {
+				if (tag.getId() == 0) {
+					Integer id = controller.getTagController().create(tag);
+					tag.setId(id);
+				}
+
+			}
+
 			t.setPerson(controller.getUserController().findByName(
 					sec.getUserPrincipal().getName()));
 			controller.getNoteController().create(t);
