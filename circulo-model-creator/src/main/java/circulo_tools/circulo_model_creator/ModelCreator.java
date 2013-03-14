@@ -40,6 +40,7 @@ public class ModelCreator {
 
 		Tag tag = new Tag();
 		tag.setName("java");
+		tag.setPerson(user);
 
 		Note note = new Note();
 		note.setSubject("wicket");
@@ -54,8 +55,10 @@ public class ModelCreator {
 		notes.add(note);
 		note.setTags(tags);
 		tag.setNotes(notes);
+
 		// session.save(role);
 		session.save(user);
+		session.save(tag);
 		session.save(note);
 		tx.commit();
 

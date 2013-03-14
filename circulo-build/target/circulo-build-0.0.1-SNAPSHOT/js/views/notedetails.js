@@ -11,21 +11,27 @@ window.NoteView = Backbone.View.extend({
         //initialize magicSuggest
         var taglist = this.model.get("tags");
         var tagavailable = this.options.tags.toJSON();
+        var temp = circulo.merge_arrays(tagavailable, taglist);
         var cleantaglist = [];
 
         //cleanup
-        for (var i=0;i<tagavailable.length;i++){
-            if (tagavailable[i].id !==null){
-                cleantaglist.push(tagavailable[i]);
+        for (var i=0;i<temp.length;i++){
+            console.log(temp[i].name);
+            if (temp[i].name !==""){
+                console.log("adding... " + temp[i].name);
+                cleantaglist.push(temp[i]);
             }
         }        
 
         var selected = [];
         for (var i=0;i<taglist.length;i++){
-            if (taglist[i].id !==null){
+            if (taglist[i].name !==null){
+                console.log("selected " + taglist[i].name);
                 selected.push(taglist[i].id);
             }
-        }        
+        }
+
+
         this.msFilter = $('#ms-filter', this.el).magicSuggest({
                 id: 'selectedTags',
                 data: cleantaglist,

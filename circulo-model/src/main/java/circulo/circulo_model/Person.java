@@ -28,6 +28,7 @@ public class Person implements Serializable {
 	private String password;
 	private String email;
 	private Role role;
+	private List<Tag> tags;
 	private List<Note> notes;
 
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
@@ -37,6 +38,15 @@ public class Person implements Serializable {
 
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
+	}
+
+	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
 	}
 
 	@ManyToOne(cascade = CascadeType.ALL)

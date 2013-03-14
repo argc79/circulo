@@ -1,5 +1,6 @@
 package circulo.circulo_resource_controller.resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -30,9 +31,19 @@ public class TagResource extends Resource<Tag> {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response findAll(@Context SecurityContext sec,
 			@Context Request request) {
-		try {
 
-			List<Tag> tags = controller.getTagController().findAll();
+		try {
+			List<?> results = controller.getTagController().findTagsList(
+					sec.getUserPrincipal().getName());
+			List<Tag> tags = new ArrayList<Tag>();
+			for (int i = 0; i < results.size(); i++) {
+				Object[] line = (Object[]) results.get(i);
+				Tag tag = new Tag();
+				tag.setId((Integer) line[0]);
+				tag.setName((String) line[1]);
+				tags.add(tag);
+			}
+
 			EntityTag tag = new EntityTag(Integer.toString(tags.hashCode()));
 			CacheControl cc = getCache(1000);
 			ResponseBuilder builder = request.evaluatePreconditions(tag);
@@ -46,7 +57,16 @@ public class TagResource extends Resource<Tag> {
 		}
 		return null;
 		// try {
-		// return controller.getTagController().findAll();
+		//
+		// List<Tag> tags = controller.getTagController().findAll();
+		// EntityTag tag = new EntityTag(Integer.toString(tags.hashCode()));
+		// CacheControl cc = getCache(1000);
+		// ResponseBuilder builder = request.evaluatePreconditions(tag);
+		// if (builder != null) {
+		// builder.cacheControl(cc);
+		// return builder.build();
+		// }
+		// return getResponseOk(tags, tag, cc);
 		// } catch (ServiceException e) {
 		// e.printStackTrace();
 		// }
@@ -84,6 +104,8 @@ public class TagResource extends Resource<Tag> {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Tag create(@Context SecurityContext sec, Tag t) {
 		try {
+			t.setPerson(controller.getUserController().findByName(
+					sec.getUserPrincipal().getName()));
 			controller.getTagController().create(t);
 			return t;
 		} catch (ServiceException e) {
@@ -99,6 +121,8 @@ public class TagResource extends Resource<Tag> {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Tag update(@Context SecurityContext sec, Tag t) {
 		try {
+			t.setPerson(controller.getUserController().findByName(
+					sec.getUserPrincipal().getName()));
 			controller.getTagController().update(t);
 		} catch (ServiceException e) {
 			e.printStackTrace();

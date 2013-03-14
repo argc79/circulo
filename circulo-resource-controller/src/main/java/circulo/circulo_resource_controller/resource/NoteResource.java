@@ -95,9 +95,11 @@ public class NoteResource extends Resource<Note> {
 			Set<Tag> tags = t.getTags();
 			for (Tag tag : tags) {
 				if (tag.getId() == 0) {
-					Integer id = controller.getTagController().create(tag);
-					tag.setId(id);
+					controller.getTagController().create(tag);
+					// tag.setId(id);
 				}
+				tag.setPerson(controller.getUserController().findByName(
+						sec.getUserPrincipal().getName()));
 
 			}
 
@@ -118,6 +120,15 @@ public class NoteResource extends Resource<Note> {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Note update(@Context SecurityContext sec, Note t) {
 		try {
+			Set<Tag> tags = t.getTags();
+			for (Tag tag : tags) {
+				if (tag.getId() == 0) {
+					controller.getTagController().create(tag);
+				}
+				tag.setPerson(controller.getUserController().findByName(
+						sec.getUserPrincipal().getName()));
+
+			}
 			t.setPerson(controller.getUserController().findByName(
 					sec.getUserPrincipal().getName()));
 			controller.getNoteController().update(t);

@@ -1,12 +1,14 @@
 package circulo.circulo_controller;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.persistence.Query;
 
 import circulo.circulo_model.Tag;
 
 public final class TagController extends BaseService<Integer, Tag> {
+	private final Logger logger = Logger.getLogger("circulo");
 
 	@Override
 	public Integer create(Tag arg) throws ServiceException {
@@ -37,6 +39,15 @@ public final class TagController extends BaseService<Integer, Tag> {
 		Query query = getQuery("findAllTags");
 
 		return query.getResultList();
+	}
+
+	public List<?> findTagsList(String userName) throws ServiceException {
+		String query = String
+				.format("select tag.id, tag.name from tag, person where tag.person_id = person.id and person.username = '%s'",
+						userName);
+		logger.info(query);
+		Query result = getEntityManager().createNativeQuery(query);
+		return result.getResultList();
 	}
 
 }

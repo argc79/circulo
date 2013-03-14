@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -28,6 +29,7 @@ public class Tag implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
+	private Person person;
 	private Set<Note> notes = new HashSet<Note>();
 
 	@Override
@@ -54,7 +56,7 @@ public class Tag implements Serializable {
 		this.notes = notes;
 	}
 
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	public String getName() {
 		return name;
 	}
@@ -76,5 +78,15 @@ public class Tag implements Serializable {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	@ManyToOne(cascade = CascadeType.REFRESH)
+	@XmlTransient
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 }
