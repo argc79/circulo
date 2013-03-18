@@ -16,9 +16,7 @@ window.NoteView = Backbone.View.extend({
 
         //cleanup
         for (var i=0;i<temp.length;i++){
-            console.log(temp[i].name);
             if (temp[i].name !==""){
-                console.log("adding... " + temp[i].name);
                 cleantaglist.push(temp[i]);
             }
         }        
@@ -26,7 +24,6 @@ window.NoteView = Backbone.View.extend({
         var selected = [];
         for (var i=0;i<taglist.length;i++){
             if (taglist[i].name !==null){
-                console.log("selected " + taglist[i].name);
                 selected.push(taglist[i].id);
             }
         }
@@ -39,6 +36,7 @@ window.NoteView = Backbone.View.extend({
                 selectionPosition: 'right',
                 expandOnFocus: true
         });
+
         // var taglist = this.model.get("tags");
         // var tagavailable = this.options.tags.toJSON();
         
@@ -114,10 +112,14 @@ window.NoteView = Backbone.View.extend({
         }
         this.model.set({tags: newModelTags});
     
+        var now = new Date();
+        now.format("isoDateTime");
+        if (this.model.get("id")===null){
+            this.model.set("createdOn", now);
+        }
+        this.model.set("modifiedOn", now);
         //Get the content from CKEditor
-        //console.debug("the model value is" + this.model.attributes.subject);
         this.model.attributes.content = CKEDITOR.instances['content'].getData();
-        //console.debug("the model value is" + this.model.attributes.content);
 
         // Upload picture file if a new file was dropped in the drop area
         if (this.pictureFile) {
@@ -179,8 +181,6 @@ window.NoteView = Backbone.View.extend({
         for (var i=0;i<selected.length;i++){ 
             console.log(selected[i].id);
         }
-        console.log(this.msFilter);
-        console.log($("#selectedTags"));
     },
 
     saveTags: function() {

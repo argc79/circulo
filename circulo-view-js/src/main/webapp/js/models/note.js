@@ -13,8 +13,8 @@ circulo.Note = circulo.Model.extend({
 		id: null,
 		subject: "",
 		content: "",
-		createdOn: "1979-11-17",
-		modifiedOn: "1979-11-17",
+		createdOn: "1979-11-17 00:00:00",
+		modifiedOn: "1979-11-17 00:00:00",
 		tags: [{
 			id: null,
 			name: ""

@@ -1,18 +1,20 @@
 circulo.AppRouter = Backbone.Router.extend({
 	routes: {
-		""                    : "listNote" ,
-        "users/list"          : "listUser",
-        "users/page/:page"    : "listUser",
-        "users/add"           : "addUser",
-        "users/:id"           : "userDetails",
-        "tags/list"           : "listTag",
-        "tags/page/:page"     : "listTag",
-        "tags/add"            : "addTag",
-        "tags/:id"            : "tagDetails",
-        "notes/list"           : "listNote",
-        "notes/page/:page"     : "listNote",
-        "notes/add"            : "addNote",
-        "notes/:id"            : "noteDetails",
+		""                      : "listNote" ,
+        "users/list"            : "listUser",
+        "users/page/:page"      : "listUser",
+        "users/add"             : "addUser",
+        "users/:id"             : "userDetails",
+        "tags/list"             : "listTag",
+        "tags/page/:page"       : "listTag",
+        "tags/add"              : "addTag",
+        "tags/:id"              : "tagDetails",
+        "notes/list"            : "listNote",
+        "notes/list/sort/alpha" : "listNote",
+        "notes/list/sort/date"  : "listNote",
+        "notes/page/:page"      : "listNote",
+        "notes/add"             : "addNote",
+        "notes/:id"             : "noteDetails"
 	},
 
     initialize: function () {
@@ -48,13 +50,15 @@ circulo.AppRouter = Backbone.Router.extend({
 
     listTag: function(page) {
         var p = page ? parseInt(page, 10) : 1;
-        var tagList = new circulo.TagCollection();    
+        var tagList = new circulo.TagCollection();
+
+        //sort start
         tagList.comparator = function(tag){
             return tag.get("name");
         };    
         tagList.fetch({success: function(){            
             $("#content-app").html(new TagListView({model: tagList, page: p}).el);
-        }});
+        }});        
         this.navigationView.selectMenuItem('tags');
         this.headerView.selectMenuItem('home');
     },
@@ -76,8 +80,18 @@ circulo.AppRouter = Backbone.Router.extend({
     listNote: function(page) {
         var p = page ? parseInt(page, 10) : 1;
         var noteList = new circulo.NoteCollection();
-
-        //var navigationView = new NavigationView();
+        var sortingSelection = this.navigationView.getSelectedSorting();
+        
+        if (sortingSelection==='alpha'){
+            noteList.comparator = function(note){
+                return note.get("subject");
+            };
+        }else if (sortingSelection==='date'){
+            noteList.comparator = function(note){
+                return -note.get("modifiedOn");
+            };
+        }       
+        
         noteList.fetch({success: function(){        
             $("#content-app").html(new NoteListView({model: noteList, page: p}).el);
         }}); 
