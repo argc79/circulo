@@ -8,7 +8,7 @@ circulo.AppRouter = Backbone.Router.extend({
         "tags/list"             : "listTag",
         "tags/page/:page"       : "listTag",
         "tags/add"              : "addTag",
-        "tags/:id"              : "tagDetails",
+        "tags/:id"              : "listNotesByTag",
         "notes/list"            : "listNote",
         "notes/list/sort/alpha" : "listNote",
         "notes/list/sort/date"  : "listNote",
@@ -75,6 +75,20 @@ circulo.AppRouter = Backbone.Router.extend({
         var tag = new circulo.Tag();
         $('#content-app').html(new TagView({model: tag}).el);
         this.headerView.selectMenuItem('add-menu-tag');
+    },
+
+    listNotesByTag: function(id, page) {        
+        var p = page ? parseInt(page, 10) : 1;
+        // var noteList = new circulo.NotesByTagCollection([], { id: id });
+        var noteList = new circulo.NotesByTagCollection([], { id: id });
+        //var noteList = new circulo.NoteCollection();
+        console.log(noteList);
+        noteList.fetch({success: function(){        
+            console.log(noteList);
+            $("#content-app").html(new NoteListView({model: noteList, page: p}).el);
+        }}); 
+        this.navigationView.selectMenuItem('tags');                          
+        this.headerView.selectMenuItem('home');     
     },
 
     listNote: function(page) {

@@ -2,6 +2,9 @@ package circulo.circulo_resource_controller.resource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -20,11 +23,16 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.SecurityContext;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import circulo.circulo_controller.ServiceException;
+import circulo.circulo_model.Note;
 import circulo.circulo_model.Tag;
+import circulo.circulo_resource_controller.resource.closure.TagClosure;
 
 @Path("tags")
 public class TagResource extends Resource<Tag> {
+	private final Logger logger = Logger.getLogger("circulo");
 
 	@Override
 	@GET
@@ -56,21 +64,6 @@ public class TagResource extends Resource<Tag> {
 			e.printStackTrace();
 		}
 		return null;
-		// try {
-		//
-		// List<Tag> tags = controller.getTagController().findAll();
-		// EntityTag tag = new EntityTag(Integer.toString(tags.hashCode()));
-		// CacheControl cc = getCache(1000);
-		// ResponseBuilder builder = request.evaluatePreconditions(tag);
-		// if (builder != null) {
-		// builder.cacheControl(cc);
-		// return builder.build();
-		// }
-		// return getResponseOk(tags, tag, cc);
-		// } catch (ServiceException e) {
-		// e.printStackTrace();
-		// }
-		// return null;
 	}
 
 	@Override
@@ -82,18 +75,45 @@ public class TagResource extends Resource<Tag> {
 	}
 
 	@Override
+	// @GET
+	// @Path("{id}")
+	// @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Tag findById(String id) {
+		// try {
+		// System.out.println("el valor de primary key es=" + id);
+		// return controller.getTagController().findByPrimaryKey(
+		// new Integer(id));
+		// } catch (NumberFormatException e) {
+		// e.printStackTrace();
+		// } catch (ServiceException e) {
+		// e.printStackTrace();
+		// }
+		return null;
+	}
+
 	@GET
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Tag findById(@PathParam("id") String id) {
+	public Response getNotes(@Context SecurityContext sec,
+			@Context Request request, @PathParam("id") String id) {
 		try {
-			System.out.println("el valor de primary key es=" + id);
-			return controller.getTagController().findByPrimaryKey(
+			Tag selectedTag = controller.getTagController().findByPrimaryKey(
 					new Integer(id));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (ServiceException e) {
-			e.printStackTrace();
+			final Set<Note> notes = selectedTag.getNotes();
+			final List<Note> retvalNotes = new ArrayList<Note>();
+			CollectionUtils.forAllDo(notes, new TagClosure(retvalNotes));
+
+			EntityTag tag = new EntityTag(Integer.toString(notes.hashCode()));
+			CacheControl cc = getCache(1000);
+			ResponseBuilder builder = request.evaluatePreconditions(tag);
+			if (builder != null) {
+				builder.cacheControl(cc);
+				return builder.build();
+			}
+			return getResponseOk(retvalNotes, tag, cc);
+
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 		return null;
 	}

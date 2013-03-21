@@ -26,3 +26,15 @@ circulo.NoteCollection = Backbone.Collection.extend({
 	model: circulo.Note,
 	url: "rest/notes"
 });
+
+circulo.NotesByTagCollection = Backbone.Collection.extend({
+	initialize: function(models, options) {
+  		this.id = options.id;
+  	},
+
+  	url: function() {
+    	return "rest/tags/" + this.id;
+  	},
+  	
+  	model: circulo.Note,
+});
