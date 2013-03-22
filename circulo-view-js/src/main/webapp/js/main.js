@@ -1,4 +1,4 @@
-utils.loadTemplate(['UserListItemView', 'UserView', 'HeaderView', 'NavigationView','TagListItemView', 'TagView', 'NoteView', 'NoteListItemView'], function() {
+utils.loadTemplate(['UserListItemView', 'UserView', 'HeaderView', 'NavigationView', 'TagListItemView', 'TagEmpty', 'NoteByTagListView', 'TagView', 'NoteView', 'NoteListItemView'], function() {
     app = circulo.AppRouter.instance();
     Backbone.history.start();
 });

@@ -85,6 +85,10 @@ public abstract class BaseService<T, X> {
 		em.set(null);
 	}
 
+	public void refresh(X arg) throws ServiceException {
+		getEntityManager().refresh(arg);
+	}
+
 	public abstract T create(X arg) throws ServiceException;
 
 	public abstract T remove(X arg) throws ServiceException;

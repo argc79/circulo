@@ -5,18 +5,7 @@ window.NoteListView = Backbone.View.extend({
     },
 
     render: function () {
-        var notes = this.model.models;
-        // if (notes===undefined){
-        //     notes=[];
-        //     var response = this.model.toJSON();
-        //     for(var i in response) {
-        //         if (typeof response[i] !== "string"){
-        //             notes.push(response[i]);    
-        //         }                
-        //     }
-        //     console.log(notes);    
-        // }
-        
+        var notes = this.model.models;        
         var len = notes.length;
         var startPos = (this.options.page - 1) * 8;
         var endPos = Math.min(startPos + 8, len);

@@ -1,4 +1,4 @@
-window.NoteListView = Backbone.View.extend({
+window.NoteByTagListView = Backbone.View.extend({
 
     initialize: function () {
         this.render();
@@ -16,13 +16,13 @@ window.NoteListView = Backbone.View.extend({
             $('.thumbnails', this.el).append(new NoteListItemView({model: notes[i]}).render().el);
         }
 
-        $(this.el).append(new Paginator({model: this.model, page: this.options.page, entityname: 'notes'}).render().el);
+        $(this.el).append(new NoteByTagPaginator({model: this.model, page: this.options.page, id: this.options.id, entityname: 'tags'}).render().el);
 
         return this;
     }
 });
 
-window.NoteListItemView = Backbone.View.extend({
+window.NoteByTagListItemView = Backbone.View.extend({
 
     tagName: "li",
 

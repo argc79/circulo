@@ -1,7 +1,6 @@
 package circulo.circulo_resource_controller.resource;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -22,9 +21,13 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.SecurityContext;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import circulo.circulo_controller.ServiceException;
 import circulo.circulo_model.Note;
 import circulo.circulo_model.Tag;
+import circulo.circulo_resource_controller.resource.closure.CreateUndefinedTagClosure;
+import circulo.circulo_resource_controller.resource.closure.NoteClosure;
 
 @Path("notes")
 public class NoteResource extends Resource<Note> {
@@ -38,15 +41,7 @@ public class NoteResource extends Resource<Note> {
 			List<?> results = controller.getNoteController().findNotesList(
 					sec.getUserPrincipal().getName());
 			List<Note> notes = new ArrayList<Note>();
-			for (int i = 0; i < results.size(); i++) {
-				Object[] line = (Object[]) results.get(i);
-				Note note = new Note();
-				note.setId((Integer) line[0]);
-				note.setSubject((String) line[1]);
-				note.setCreatedOn((Date) line[2]);
-				note.setModifiedOn((Date) line[3]);
-				notes.add(note);
-			}
+			CollectionUtils.forAllDo(results, new NoteClosure(notes));
 
 			EntityTag tag = new EntityTag(Integer.toString(notes.hashCode()));
 			CacheControl cc = getCache(1000);
@@ -92,19 +87,12 @@ public class NoteResource extends Resource<Note> {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Note create(@Context SecurityContext sec, Note t) {
 		try {
+			final String userName = sec.getUserPrincipal().getName();
 			Set<Tag> tags = t.getTags();
-			for (Tag tag : tags) {
-				if (tag.getId() == 0) {
-					controller.getTagController().create(tag);
-					// tag.setId(id);
-				}
-				tag.setPerson(controller.getUserController().findByName(
-						sec.getUserPrincipal().getName()));
+			CollectionUtils.forAllDo(tags, new CreateUndefinedTagClosure(
+					controller, userName));
 
-			}
-
-			t.setPerson(controller.getUserController().findByName(
-					sec.getUserPrincipal().getName()));
+			t.setPerson(controller.getUserController().findByName(userName));
 			controller.getNoteController().create(t);
 			return t;
 		} catch (ServiceException e) {
@@ -120,15 +108,10 @@ public class NoteResource extends Resource<Note> {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Note update(@Context SecurityContext sec, Note t) {
 		try {
+			final String userName = sec.getUserPrincipal().getName();
 			Set<Tag> tags = t.getTags();
-			for (Tag tag : tags) {
-				if (tag.getId() == 0) {
-					controller.getTagController().create(tag);
-				}
-				tag.setPerson(controller.getUserController().findByName(
-						sec.getUserPrincipal().getName()));
-
-			}
+			CollectionUtils.forAllDo(tags, new CreateUndefinedTagClosure(
+					controller, userName));
 			t.setPerson(controller.getUserController().findByName(
 					sec.getUserPrincipal().getName()));
 			controller.getNoteController().update(t);

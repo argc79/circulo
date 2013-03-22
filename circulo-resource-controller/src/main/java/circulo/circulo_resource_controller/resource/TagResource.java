@@ -99,11 +99,13 @@ public class TagResource extends Resource<Tag> {
 		try {
 			Tag selectedTag = controller.getTagController().findByPrimaryKey(
 					new Integer(id));
+			controller.getTagController().refresh(selectedTag);
 			final Set<Note> notes = selectedTag.getNotes();
 			final List<Note> retvalNotes = new ArrayList<Note>();
 			CollectionUtils.forAllDo(notes, new TagClosure(retvalNotes));
 
-			EntityTag tag = new EntityTag(Integer.toString(notes.hashCode()));
+			EntityTag tag = new EntityTag(Integer.toString(retvalNotes
+					.hashCode()));
 			CacheControl cc = getCache(1000);
 			ResponseBuilder builder = request.evaluatePreconditions(tag);
 			if (builder != null) {
