@@ -48,4 +48,14 @@ public final class NoteController extends BaseService<Integer, Note> {
 		Query result = getEntityManager().createNativeQuery(query);
 		return result.getResultList();
 	}
+
+	public List<?> findNotesList(String userName, String query)
+			throws ServiceException {
+		String q = String
+				.format("select note.id, note.subject, note.createdOn, note.modifiedOn from note, person where note.person_id = person.id and person.username = '%s' and note.subject like '%%%s%%'",
+						userName, query);
+		logger.info(q);
+		Query result = getEntityManager().createNativeQuery(q);
+		return result.getResultList();
+	}
 }

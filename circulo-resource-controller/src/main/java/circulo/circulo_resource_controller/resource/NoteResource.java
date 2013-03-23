@@ -30,9 +30,8 @@ import circulo.circulo_resource_controller.resource.closure.CreateUndefinedTagCl
 import circulo.circulo_resource_controller.resource.closure.NoteClosure;
 
 @Path("notes")
-public class NoteResource extends Resource<Note> {
+public class NoteResource extends Resource implements ResourceInterface<Note> {
 
-	@Override
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response findAll(@Context SecurityContext sec,
@@ -57,7 +56,6 @@ public class NoteResource extends Resource<Note> {
 		return null;
 	}
 
-	@Override
 	@GET
 	@Path("search/{query}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -65,7 +63,6 @@ public class NoteResource extends Resource<Note> {
 		return null;
 	}
 
-	@Override
 	@GET
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -81,7 +78,6 @@ public class NoteResource extends Resource<Note> {
 		return null;
 	}
 
-	@Override
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -101,7 +97,6 @@ public class NoteResource extends Resource<Note> {
 		return null;
 	}
 
-	@Override
 	@PUT
 	@Path("{id}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -121,7 +116,6 @@ public class NoteResource extends Resource<Note> {
 		return t;
 	}
 
-	@Override
 	@DELETE
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })

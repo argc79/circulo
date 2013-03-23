@@ -50,4 +50,14 @@ public final class TagController extends BaseService<Integer, Tag> {
 		return result.getResultList();
 	}
 
+	public List<?> findTagsList(String userName, String query)
+			throws ServiceException {
+		String q = String
+				.format("select tag.id, tag.name from tag, person where tag.person_id = person.id and person.username = '%s' and tag.name like '%%%s%%'",
+						userName, query);
+		logger.info(q);
+		Query result = getEntityManager().createNativeQuery(q);
+		return result.getResultList();
+	}
+
 }

@@ -23,9 +23,8 @@ import circulo.circulo_controller.ServiceException;
 import circulo.circulo_model.Person;
 
 @Path("users")
-public class UserResource extends Resource<Person> {
+public class UserResource extends Resource implements ResourceInterface<Person> {
 
-	@Override
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response findAll(@Context SecurityContext sec,
@@ -41,14 +40,12 @@ public class UserResource extends Resource<Person> {
 				return builder.build();
 			}
 			return getResponseOk(users, tag, cc);
-			// return controller.getUserController().findAll();
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	@Override
 	@GET
 	@Path("search/{query}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -56,7 +53,6 @@ public class UserResource extends Resource<Person> {
 		return null;
 	}
 
-	@Override
 	@GET
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -72,7 +68,6 @@ public class UserResource extends Resource<Person> {
 		return null;
 	}
 
-	@Override
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -86,7 +81,6 @@ public class UserResource extends Resource<Person> {
 		return null;
 	}
 
-	@Override
 	@PUT
 	@Path("{id}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -100,7 +94,6 @@ public class UserResource extends Resource<Person> {
 		return t;
 	}
 
-	@Override
 	@DELETE
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })

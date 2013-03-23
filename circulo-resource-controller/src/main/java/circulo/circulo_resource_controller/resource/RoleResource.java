@@ -23,9 +23,8 @@ import circulo.circulo_controller.ServiceException;
 import circulo.circulo_model.Role;
 
 @Path("roles")
-public class RoleResource extends Resource<Role> {
+public class RoleResource extends Resource implements ResourceInterface<Role> {
 
-	@Override
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response findAll(@Context SecurityContext sec,
@@ -45,15 +44,8 @@ public class RoleResource extends Resource<Role> {
 			e.printStackTrace();
 		}
 		return null;
-		// try {
-		// return controller.getRoleController().findAll();
-		// } catch (ServiceException e) {
-		// e.printStackTrace();
-		// }
-		// return null;
 	}
 
-	@Override
 	@GET
 	@Path("search/{query}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -61,7 +53,6 @@ public class RoleResource extends Resource<Role> {
 		return null;
 	}
 
-	@Override
 	@GET
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -78,7 +69,6 @@ public class RoleResource extends Resource<Role> {
 		return null;
 	}
 
-	@Override
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -92,7 +82,6 @@ public class RoleResource extends Resource<Role> {
 		return null;
 	}
 
-	@Override
 	@PUT
 	@Path("{id}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -106,7 +95,6 @@ public class RoleResource extends Resource<Role> {
 		return t;
 	}
 
-	@Override
 	@DELETE
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })

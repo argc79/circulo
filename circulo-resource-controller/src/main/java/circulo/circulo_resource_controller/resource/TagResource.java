@@ -31,10 +31,9 @@ import circulo.circulo_model.Tag;
 import circulo.circulo_resource_controller.resource.closure.TagClosure;
 
 @Path("tags")
-public class TagResource extends Resource<Tag> {
+public class TagResource extends Resource implements ResourceInterface<Tag> {
 	private final Logger logger = Logger.getLogger("circulo");
 
-	@Override
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response findAll(@Context SecurityContext sec,
@@ -66,7 +65,6 @@ public class TagResource extends Resource<Tag> {
 		return null;
 	}
 
-	@Override
 	@GET
 	@Path("search/{query}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -74,7 +72,6 @@ public class TagResource extends Resource<Tag> {
 		return null;
 	}
 
-	@Override
 	// @GET
 	// @Path("{id}")
 	// @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -120,7 +117,6 @@ public class TagResource extends Resource<Tag> {
 		return null;
 	}
 
-	@Override
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -136,7 +132,6 @@ public class TagResource extends Resource<Tag> {
 		return null;
 	}
 
-	@Override
 	@PUT
 	@Path("{id}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -152,7 +147,6 @@ public class TagResource extends Resource<Tag> {
 		return t;
 	}
 
-	@Override
 	@DELETE
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })

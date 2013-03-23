@@ -18,4 +18,7 @@
 	<bean name="NoteResource" class="circulo.circulo_resource_controller.resource.NoteResource">
 		<property name="controller" ref="Controller"/>
 	</bean>
+	<bean name="SearchResource" class="circulo.circulo_resource_controller.resource.SearchResource">
+		<property name="controller" ref="Controller"/>
+	</bean>
 </beans>
