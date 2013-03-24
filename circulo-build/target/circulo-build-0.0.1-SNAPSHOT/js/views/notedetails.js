@@ -37,6 +37,11 @@ window.NoteView = Backbone.View.extend({
                 expandOnFocus: true
         });
 
+        // $("#google-calendar", this.el).append("<a href='http://www.google.com/calendar/event?action=TEMPLATE&text=" + this.model.subject + "&dates=20051231T230000Z/20051231T230000Z&details=Description%20Text&location=Where%20Text&trp=false&sprop=Website%20address&sprop=name:Website%20Name' target='_blank'><img src='//www.google.com/calendar/images/ext/gc_button2.gif' border=0></a>");
+        if (this.model.id !==null){
+            $("#google-calendar", this.el).append("<a href='http://www.google.com/calendar/event?action=TEMPLATE&text=Note:%20" + escape(this.model.get('subject')) + "&details=Link%20to%20note:%20http://rocket79.dyndns.org:83/circulo/%23notes/" + this.model.id + "&trp=false' target='_blank'><img src='//www.google.com/calendar/images/ext/gc_button2.gif' border=0></a>");
+        }
+
         // var taglist = this.model.get("tags");
         // var tagavailable = this.options.tags.toJSON();
         

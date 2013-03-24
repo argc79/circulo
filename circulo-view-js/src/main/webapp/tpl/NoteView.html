@@ -13,7 +13,7 @@
                     <div class="control-group hide"><!-- hide -->
                         <label for="id" class="control-label">Id:</label>
 
-                        <div class="controls">
+                        <div id="id-section" class="controls">
                             <input id="id" name="id" type="text" value="<%= id == null? '' : id %>" class="span1"
                                    disabled/>
                         </div>
@@ -75,10 +75,10 @@
                         </div>
 
                     </div>
-                    <div class="control-group span11">
-                        <label for="subject" class="control-label">Content:</label>
+                    <div class="offset1 span10">
+                        <!-- <label for="subject" class="control-label">Content:</label> -->
 
-                        <div class="controls">
+                        <div>
 
                             <textarea id="content" name="content" data="<%= content %>"></textarea>                            
                             <script type="text/javascript">
@@ -94,6 +94,11 @@
                         </div>
                     </div>
                     
+                    <div class="offset1 <%= id == null? 'hide' : '' %>">
+
+                        <div id="google-calendar">                            
+                        </div>
+                    </div>
                 </div>
 
             </div>
