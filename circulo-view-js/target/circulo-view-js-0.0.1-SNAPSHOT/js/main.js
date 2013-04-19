@@ -17,6 +17,7 @@ utils.loadTemplate(['UserListItemView'], function() {
     Backbone.history.start();
 });
 
+//Comment option for deployment
 /*$.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
   // Modify options, control originalOptions, store jqXHR, etc
   options.url = "http://localhost:8080/circulo/" + options.url;

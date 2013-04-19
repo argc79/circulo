@@ -56,6 +56,10 @@
 			<input type='password' name='j_password' class="input-block-level" placeholder="Password"/>
 			<input name="submit" type="submit"  class="btn btn-large btn-primary" value="Submit" />
 		</form>
+		<form action="j_spring_openid_security_check" id=”googleOpenId” method="post" target="_top">
+    		<input id="openid_identifier" name="openid_identifier" type="hidden" value="https://www.google.com/accounts/o8/id"/>
+    		<img src="/img/social/google.png" onClick="submitForm('googleOpenId')”/>
+		</form>
 	</div>
 	<script src="lib/jquery.js"></script>
 	<script src="lib/bootstrap.js"></script>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.013" errors="0" skipped="0" tests="1" name="circulo.circulo_resource_controller.AppTest">
+<testsuite failures="0" time="0.011" errors="0" skipped="0" tests="1" name="circulo.circulo_resource_controller.AppTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
-    <property name="java.vm.version" value="20.14-b01-447"/>
+    <property name="java.vm.version" value="20.45-b01-451"/>
     <property name="awt.nativeDoubleBuffering" value="true"/>
     <property name="gopherProxySet" value="false"/>
-    <property name="mrj.build" value="11M4203"/>
+    <property name="mrj.build" value="11M4406"/>
     <property name="java.vm.vendor" value="Apple Inc."/>
     <property name="java.vendor.url" value="http://www.apple.com/"/>
     <property name="path.separator" value=":"/>
@@ -18,7 +18,7 @@
     <property name="sun.os.patch.level" value="unknown"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="user.dir" value="/Users/Anibal/Development/java/workspace/circulo-resource-controller"/>
-    <property name="java.runtime.version" value="1.6.0_43-b01-447-11M4203"/>
+    <property name="java.runtime.version" value="1.6.0_45-b06-451-11M4406"/>
     <property name="java.awt.graphicsenv" value="apple.awt.CGraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/endorsed"/>
     <property name="os.arch" value="x86_64"/>
@@ -50,7 +50,7 @@
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="apple.awt.CToolkit"/>
     <property name="java.vm.info" value="mixed mode"/>
-    <property name="java.version" value="1.6.0_43"/>
+    <property name="java.version" value="1.6.0_45"/>
     <property name="java.ext.dirs" value="/Library/Java/Extensions:/System/Library/Java/Extensions:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext"/>
     <property name="sun.boot.class.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/Resources/Java/JavaRuntimeSupport.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jce.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar"/>
     <property name="java.vendor" value="Apple Inc."/>
@@ -59,10 +59,10 @@
     <property name="java.vendor.url.bug" value="http://bugreport.apple.com/"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
-    <property name="mrj.version" value="1070.1.6.0_43-447"/>
+    <property name="mrj.version" value="1070.1.6.0_45-451"/>
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.002" classname="circulo.circulo_resource_controller.AppTest" name="testApp"/>
+  <testcase time="0.001" classname="circulo.circulo_resource_controller.AppTest" name="testApp"/>
 </testsuite>
