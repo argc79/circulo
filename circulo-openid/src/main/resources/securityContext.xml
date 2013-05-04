@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bean:beans xmlns:bean="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.springframework.org/schema/security"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">		   
+	<bean:import resource="classpath:resourceControllerContext.xml"/>
+	
+	<!-- <http auto-config="true">
+		<intercept-url pattern="/index.html" access="ROLE_USER" />
+		<intercept-url pattern="/welcome*" access="ROLE_USER" />
+		<intercept-url pattern="/rest/**" access="ROLE_USER" />
+		<form-login login-page="/login.do" default-target-url="/welcome.do"
+					authentication-failure-url="/loginfailed.do" />
+		<logout logout-success-url="/logout.do" />
+	</http> -->
+	<http auto-config="true" use-expressions="true">
+		<intercept-url pattern="/" access="permitAll"/>
+		<intercept-url pattern="/index.html" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/welcome*" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/rest/**" access="hasRole('ROLE_USER')" />
+		<!-- <form-login login-page="/login.do" default-target-url="/welcome.do"
+					authentication-failure-url="/loginfailed.do" /> -->
+		<openid-login login-page="/login.do" user-service-ref="registeringOpenIDAuthenticationUserDetailsService">
+			<attribute-exchange identifier-match=".*myopenid.com.*">
+                <openid-attribute name="email" type="http://schema.openid.net/contact/email" required="true"/>
+                <openid-attribute name="fullname" type="http://schema.openid.net/namePerson" required="true"/>
+            </attribute-exchange>
+            <attribute-exchange identifier-match="https://www.google.com/.*"> 
+            	<openid-attribute name="email" type="http://axschema.org/contact/email" required="true" count="1"/>
+                <openid-attribute name="firstname" type="http://axschema.org/namePerson/first" required="true" />
+                <openid-attribute name="lastname" type="http://axschema.org/namePerson/last" required="true" />
+            </attribute-exchange>
+            <attribute-exchange identifier-match=".*yahoo.com.*">
+                <openid-attribute name="email" type="http://axschema.org/contact/email" required="true"/>
+                <openid-attribute name="fullname" type="http://axschema.org/namePerson" required="true" />
+            </attribute-exchange>
+		</openid-login>
+		<logout logout-success-url="/logout.do" />
+	</http>
+	
+    <authentication-manager>
+    	<authentication-provider user-service-ref="circuloAuthenticationService" />
+	</authentication-manager>
+	
+	<bean:bean id="circuloAuthenticationService" class="circulo.circulo_security.authentication.CirculoAuthenticationService">
+		<bean:property name="controller" ref="Controller"/>
+	</bean:bean>
+	
+	<bean:bean id="defaultCirculoService" class="circulo.circulo_security.service.DefaultCirculoService">
+		<bean:property name="controller" ref="Controller"/>
+	</bean:bean>
+	
+	<bean:bean id="registeringOpenIDAuthenticationUserDetailsService" class="circulo.circulo_security.openid.RegisteringOpenIDAuthenticationUserDetailsService">
+		<bean:property name="userDetailsService" ref="circuloAuthenticationService"/>
+		<bean:property name="circuloService" ref="defaultCirculoService"/>
+	</bean:bean>
+
+</bean:beans>

@@ -13,7 +13,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	<!-- <spring.version>3.0.1.RELEASE</spring.version> -->
-	<spring.version>3.0.2.RELEASE</spring.version> 
+	<spring.version>3.1.0.RELEASE</spring.version> 
   </properties>
 
   <dependencies>
@@ -41,12 +41,52 @@
 	     		<artifactId>spring-context</artifactId>
 	     		<groupId>org.springframework</groupId>
 	     	</exclusion>
+	     	<exclusion>
+	     		<artifactId>spring-aop</artifactId>
+	     		<groupId>org.springframework</groupId>
+	     	</exclusion>
+	     	<exclusion>
+	     		<artifactId>spring-beans</artifactId>
+	     		<groupId>org.springframework</groupId>
+	     	</exclusion>
+	     	<exclusion>
+	     		<artifactId>spring-expression</artifactId>
+	     		<groupId>org.springframework</groupId>
+	     	</exclusion>
+	     	<exclusion>
+	     		<artifactId>spring-jdbc</artifactId>
+	     		<groupId>org.springframework</groupId>
+	     	</exclusion>
+	     	<exclusion>
+	     		<artifactId>spring-tx</artifactId>
+	     		<groupId>org.springframework</groupId>
+	     	</exclusion>
 	     </exclusions>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-tx</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-expression</artifactId>
+		<version>${spring.version}</version>
 	</dependency>
 	<dependency>
 	     <groupId>org.springframework.security</groupId>
 	     <artifactId>spring-security-config</artifactId>
 	     <version>${spring.version}</version>
+	     <exclusions>
+	     	<exclusion>
+	     		<artifactId>spring-aop</artifactId>
+	     		<groupId>org.springframework</groupId>
+	     	</exclusion>
+	     	<exclusion>
+	     		<artifactId>spring-beans</artifactId>
+	     		<groupId>org.springframework</groupId>
+	     	</exclusion>
+	     </exclusions>
 	</dependency>
 	<!-- <dependency>
 	     <groupId>org.springframework.security</groupId>
@@ -64,6 +104,18 @@
 	    	</exclusion>
 	    	<exclusion>
 	    		<artifactId>spring-context</artifactId>
+	    		<groupId>org.springframework</groupId>
+	    	</exclusion>
+	    	<exclusion>
+	    		<artifactId>spring-aop</artifactId>
+	    		<groupId>org.springframework</groupId>
+	    	</exclusion>
+	    	<exclusion>
+	    		<artifactId>spring-beans</artifactId>
+	    		<groupId>org.springframework</groupId>
+	    	</exclusion>
+	    	<exclusion>
+	    		<artifactId>spring-expression</artifactId>
 	    		<groupId>org.springframework</groupId>
 	    	</exclusion>
 	    </exclusions>
@@ -92,6 +144,14 @@
 				<artifactId>spring-context</artifactId>
 				<groupId>org.springframework</groupId>
 			</exclusion>
+			<exclusion>
+				<artifactId>spring-beans</artifactId>
+				<groupId>org.springframework</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>spring-expression</artifactId>
+				<groupId>org.springframework</groupId>
+			</exclusion>
 		</exclusions>
 	</dependency>
 	<dependency>
@@ -103,11 +163,31 @@
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-context</artifactId>
 		<version>${spring.version}</version>
+		<exclusions>
+			<exclusion>
+				<artifactId>spring-aop</artifactId>
+				<groupId>org.springframework</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>spring-beans</artifactId>
+				<groupId>org.springframework</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>spring-expression</artifactId>
+				<groupId>org.springframework</groupId>
+			</exclusion>
+		</exclusions>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-web</artifactId>
 		<version>${spring.version}</version>
+		<exclusions>
+			<exclusion>
+				<artifactId>spring-beans</artifactId>
+				<groupId>org.springframework</groupId>
+			</exclusion>
+		</exclusions>
 	</dependency>
 	<dependency>
 		<groupId>javax.servlet</groupId>

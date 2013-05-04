@@ -20,7 +20,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "findAllUsers", query = "select u from Person u"),
-		@NamedQuery(name = "findByUserName", query = "select u from Person u where userName = :userName") })
+		@NamedQuery(name = "findByUserName", query = "select u from Person u where userName = :userName"),
+		@NamedQuery(name = "findByOpenId", query = "select u from Person u where openid= :openid") })
 public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
@@ -30,6 +31,8 @@ public class Person implements Serializable {
 	private Role role;
 	private List<Tag> tags;
 	private List<Note> notes;
+	private String firstName;
+	private String lastName;
 
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
 	public List<Note> getNotes() {
@@ -95,4 +98,19 @@ public class Person implements Serializable {
 		this.email = email;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 }

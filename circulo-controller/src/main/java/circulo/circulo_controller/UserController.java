@@ -61,4 +61,16 @@ public class UserController extends BaseService<Integer, Person> {
 		Query query = getQuery("findAllUsers");
 		return query.getResultList();
 	}
+
+	public Person findByOpenId(String openid) throws ServiceException {
+		final Query query = getQuery("findByOpenId");
+		query.setParameter("openid", openid);
+		final Person retval;
+		try {
+			retval = (Person) query.getSingleResult();
+		} catch (NoResultException nre) {
+			throw new ServiceException("No result", nre);
+		}
+		return retval;
+	}
 }
