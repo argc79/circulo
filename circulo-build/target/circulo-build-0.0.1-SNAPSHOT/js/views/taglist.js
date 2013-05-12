@@ -5,14 +5,15 @@ window.TagListView = Backbone.View.extend({
     },
 
     render: function () {
-        var tags = this.model.models;
-        var len = tags.length;
-        var startPos = (this.options.page - 1) * 8;
-        var endPos = Math.min(startPos + 8, len);
+        var tags = this.model.models,
+            len = tags.length,
+            startPos = (this.options.page - 1) * 8,
+            endPos = Math.min(startPos + 8, len),
+            i;
 
         $(this.el).html('<ul class="thumbnails"></ul>');
 
-        for (var i = startPos; i < endPos; i++) {
+        for (i = startPos; i < endPos; i++) {
             $('.thumbnails', this.el).append(new TagListItemView({model: tags[i]}).render().el);
         }
 

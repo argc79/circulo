@@ -27,8 +27,9 @@ circulo.AppRouter = Backbone.Router.extend({
     },
     
 	listUser: function(page) {
-        var p = page ? parseInt(page, 10) : 1;
-        var userList = new circulo.UserCollection();
+        var p = page ? parseInt(page, 10) : 1, 
+            userList = new circulo.UserCollection();;
+
         userList.fetch({success: function(){
             $("#content-app").html(new UserListView({model: userList, page: p}).el);
         }});
@@ -50,8 +51,8 @@ circulo.AppRouter = Backbone.Router.extend({
     },
 
     listTag: function(page) {
-        var p = page ? parseInt(page, 10) : 1;
-        var tagList = new circulo.TagCollection();
+        var p = page ? parseInt(page, 10) : 1, 
+            tagList = new circulo.TagCollection();
 
         //sort start
         tagList.comparator = function(tag){
@@ -66,6 +67,7 @@ circulo.AppRouter = Backbone.Router.extend({
 
     tagDetails: function (id) {
         var tag = new circulo.Tag({id: id});
+
         tag.fetch({success: function(){
             $("#content-app").html(new TagView({model: tag}).el);
         }});
@@ -74,20 +76,20 @@ circulo.AppRouter = Backbone.Router.extend({
 
     addTag: function() {
         var tag = new circulo.Tag();
+
         $('#content-app').html(new TagView({model: tag}).el);
         this.headerView.selectMenuItem('add-menu-tag');
     },
 
     listNotesByTag: function(id, page) {        
-        var p = page ? parseInt(page, 10) : 1;
-        var noteList = new circulo.NotesByTagCollection([], { id: id });
+        var p = page ? parseInt(page, 10) : 1, 
+            noteList = new circulo.NotesByTagCollection([], { id: id }),
+            tag;
         
         noteList.fetch({success: function(){        
             if (noteList.length === 0){
-                var tag = new circulo.Tag({id: id});
-                //tag.fetch({success: function(){
+                tag = new circulo.Tag({id: id});
                 $("#content-app").html(new TagEmpty({model: tag}).el);
-                //}});
             } else {
                 $("#content-app").html(new NoteByTagListView({model: noteList, page: p, id: id}).el);
             }            
@@ -97,9 +99,9 @@ circulo.AppRouter = Backbone.Router.extend({
     },
 
     listNote: function(page) {
-        var p = page ? parseInt(page, 10) : 1;
-        var noteList = new circulo.NoteCollection();
-        var sortingSelection = this.navigationView.getSelectedSorting();
+        var p = page ? parseInt(page, 10) : 1, 
+            noteList = new circulo.NoteCollection(), 
+            sortingSelection = this.navigationView.getSelectedSorting();
         
         if (sortingSelection==='alpha'){
             noteList.comparator = function(note){
@@ -119,8 +121,9 @@ circulo.AppRouter = Backbone.Router.extend({
     },
 
     noteDetails: function (id) {
-        var note = new circulo.Note({id: id});
-        var tagList = new circulo.TagCollection();
+        var note = new circulo.Note({id: id}), 
+            tagList = new circulo.TagCollection();
+
         note.fetch({success: function(){
             tagList.fetch({success: function(){
                 $("#content-app").html(new NoteView({model: note, tags: tagList}).el);            
@@ -130,14 +133,13 @@ circulo.AppRouter = Backbone.Router.extend({
     },
 
     addNote: function() {
-        var note = new circulo.Note();
-        var tagList = new circulo.TagCollection();
-        //$("#navigation").html(null);
+        var note = new circulo.Note(), 
+            tagList = new circulo.TagCollection();
+        
         this.navigationView.hideNavigation();
         tagList.fetch({success: function(){
             $("#content-app").html(new NoteView({model: note, tags: tagList}).el);            
         }});
-        // $('#content-app').html(new NoteView({model: note}).el);
         this.headerView.selectMenuItem('add-menu-note');
     }
 });

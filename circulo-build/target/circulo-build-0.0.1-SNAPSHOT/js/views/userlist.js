@@ -5,14 +5,15 @@ window.UserListView = Backbone.View.extend({
     },
 
     render: function () {
-        var users = this.model.models;
-        var len = users.length;
-        var startPos = (this.options.page - 1) * 8;
-        var endPos = Math.min(startPos + 8, len);
+        var users = this.model.models,
+            len = users.length,
+            startPos = (this.options.page - 1) * 8,
+            endPos = Math.min(startPos + 8, len),
+            i;
 
         $(this.el).html('<ul class="thumbnails"></ul>');
 
-        for (var i = startPos; i < endPos; i++) {
+        for (i = startPos; i < endPos; i += 1) {
             $('.thumbnails', this.el).append(new UserListItemView({model: users[i]}).render().el);
         }
 

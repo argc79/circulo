@@ -19,7 +19,8 @@ window.utils = {
     },
 
     displayValidationErrors: function (messages) {
-        for (var key in messages) {
+        var key;
+        for (key in messages) {
             if (messages.hasOwnProperty(key)) {
                 this.addValidationError(key, messages[key]);
             }

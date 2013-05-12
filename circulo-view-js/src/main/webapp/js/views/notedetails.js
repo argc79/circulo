@@ -8,21 +8,22 @@ window.NoteView = Backbone.View.extend({
         //create               
         $(this.el).html(this.template(this.model.toJSON()));
         
-        //initialize magicSuggest
-        var taglist = this.model.get("tags");
-        var tagavailable = this.options.tags.toJSON();
-        var temp = circulo.merge_arrays(tagavailable, taglist);
-        var cleantaglist = [];
+        //initialize magicSuggest and variables
+        var taglist = this.model.get("tags"),
+            tagavailable = this.options.tags.toJSON(),
+            temp = circulo.merge_arrays(tagavailable, taglist),
+            cleantaglist = [],
+            i,
+            selected = [];
 
         //cleanup
-        for (var i=0;i<temp.length;i++){
+        for (i = 0; i < temp.length; i += 1){
             if (temp[i].name !==""){
                 cleantaglist.push(temp[i]);
             }
         }        
 
-        var selected = [];
-        for (var i=0;i<taglist.length;i++){
+        for (i = 0; i < taglist.length; i++){
             if (taglist[i].name !==null){
                 selected.push(taglist[i].id);
             }
@@ -37,32 +38,17 @@ window.NoteView = Backbone.View.extend({
                 expandOnFocus: true
         });
 
-        // $("#google-calendar", this.el).append("<a href='http://www.google.com/calendar/event?action=TEMPLATE&text=" + this.model.subject + "&dates=20051231T230000Z/20051231T230000Z&details=Description%20Text&location=Where%20Text&trp=false&sprop=Website%20address&sprop=name:Website%20Name' target='_blank'><img src='//www.google.com/calendar/images/ext/gc_button2.gif' border=0></a>");
         if (this.model.id !==null){
             $("#google-calendar", this.el).append("<a href='http://www.google.com/calendar/event?action=TEMPLATE&text=Note:%20" + escape(this.model.get('subject')) + "&details=Link%20to%20note:%20http://rocket79.dyndns.org:83/circulo/%23notes/" + this.model.id + "&trp=false' target='_blank'><img src='//www.google.com/calendar/images/ext/gc_button2.gif' border=0></a>");
         }
-
-        // var taglist = this.model.get("tags");
-        // var tagavailable = this.options.tags.toJSON();
-        
-        // //populate available tags
-        // for (var i=0;i<tagavailable.length;i++){
-        //     var checked = (this.isTagSelected(tagavailable[i].id)) ? "checked" : "";
-        //     $("#tags-table", this.el).append("<tr><td>"+ tagavailable[i].name + "</td><td><input id='tag-table-id-" + tagavailable[i].id + "' type='checkbox' " + checked +"/></td></tr>");
-        // }
-
-        // //populate current tags
-        // for (var i=0;i<taglist.length;i++){ 
-        //     $("#tags-available", this.el).append("<span id='tag-id-"+ taglist[i].id +"' class='label label-info'>" +  taglist[i].name + "</span>");
-        // }
-        // $("#tags-available", this.el).append("<a id='add-tags' class='btn addTags'>Add Tags</a>");
         
         return this;
     },
 
     isTagSelected: function(id){
-        var taglist = this.model.get("tags");
-        for (var i=0;i<taglist.length;i++){ 
+        var taglist = this.model.get("tags"),
+            i;
+        for (i = 0; i < taglist.length; i += 1){ 
             if (taglist[i].id === id){
                 return true;
             }
@@ -85,13 +71,14 @@ window.NoteView = Backbone.View.extend({
         utils.hideAlert();
 
         // Apply the change to the model
-        var target = event.target;
-        var change = {};
+        var target = event.target,
+            change = {},
+            check;
         change[target.name] = target.value;
         this.model.set(change);
 
         // Run validation rule (if any) on changed item
-        var check = this.model.validateItem(target.id);
+        check = this.model.validateItem(target.id);
         if (check.isValid === false) {
             utils.addValidationError(target.id, check.message);
         } else {
@@ -100,16 +87,21 @@ window.NoteView = Backbone.View.extend({
     },
 
     beforeSave: function () {
-        var self = this;
-        var check = this.model.validateAll();
+        var self = this,
+            check,
+            newModelTags = [],
+            selected,
+            i,
+            now = new Date();
+
+        check = this.model.validateAll();
         if (check.isValid === false) {
             utils.displayValidationErrors(check.messages);
             return false;
         }
         
-        var newModelTags = [];
-        var selected = this.msFilter.getSelectedItems();
-        for (var i=0;i<selected.length;i++){ 
+        selected = this.msFilter.getSelectedItems();
+        for (i = 0; i < selected.length; i += 1){ 
             if (selected[i].id === selected[i].name){
                 selected[i].id = null;
             }
@@ -117,7 +109,7 @@ window.NoteView = Backbone.View.extend({
         }
         this.model.set({tags: newModelTags});
     
-        var now = new Date();
+        now = new Date();
         now.format("isoDateTime");
         if (this.model.get("id")===null){
             this.model.set("createdOn", now);
@@ -141,7 +133,7 @@ window.NoteView = Backbone.View.extend({
     },
 
     saveNote: function () {
-        var self = this;        
+        var self = this;
         this.model.save(null, {
             success: function (model) {
                 self.render();
@@ -165,14 +157,16 @@ window.NoteView = Backbone.View.extend({
     },
 
     dropHandler: function (event) {
+        var e,
+            reader = new FileReader();
+
         event.stopPropagation();
         event.preventDefault();
-        var e = event.originalEvent;
+        e = event.originalEvent;
         e.dataTransfer.dropEffect = 'copy';
         this.pictureFile = e.dataTransfer.files[0];
 
         // Read the image file from the local file system and display it in the img tag
-        var reader = new FileReader();
         reader.onloadend = function () {
             $('#picture').attr('src', reader.result);
         };
@@ -182,22 +176,24 @@ window.NoteView = Backbone.View.extend({
     addTags: function () {                                               
         // $('#myModal').modal();        
         // console.log("addTags");
-        var selected = this.msFilter.getSelectedItems();
-        for (var i=0;i<selected.length;i++){ 
+        var selected = this.msFilter.getSelectedItems(),
+            i;
+        for (i = 0; i < selected.length; i += 1){ 
             console.log(selected[i].id);
         }
     },
 
     saveTags: function() {
-        var taglist = this.model.get("tags");
+        var taglist = this.model.get("tags"),
+            i;
         //cleaning
-        for (var i=0;i<taglist.length;i++){ 
+        for (i = 0; i < taglist.length; i += 1){ 
             $("#tag-id-"+ taglist[i].id).remove();
         }
         $("#add-tags").remove();
 
         //create
-        for (var i=0;i<taglist.length;i++){ 
+        for (i = 0; i < taglist.length; i += 1){ 
             $("#tags-available").append("<span id='tag-id-"+ taglist[i].id +"' class='label label-info'>" +  taglist[i].name + "</span>");
         }
         $("#tags-available").append("<span id='tag-id-2222' class='label label-info'>Nintendo</span>");

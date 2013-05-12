@@ -5,12 +5,12 @@ circulo.Model = Backbone.Model.extend({
 
     // TODO: Implement Backbone's standard validate() method instead.
     validateAll: function () {
+        var messages = {}, 
+            key, check;
 
-        var messages = {};
-
-        for (var key in this.validators) {
+        for (key in this.validators) {
             if(this.validators.hasOwnProperty(key)) {
-                var check = this.validators[key](this.get(key));
+                check = this.validators[key](this.get(key));
                 if (check.isValid === false) {
                     messages[key] = check.message;
                 }
