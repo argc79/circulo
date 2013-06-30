@@ -13,7 +13,8 @@ window.NavigationView = Backbone.View.extend({
         "click .tags"       : "navigateTags",
         "click .notes"      : "navigateNotes",
         "click .byalpha"    : "sortAlpha",
-        "click .bydate"     : "sortDate"
+        "click .bydate"     : "sortDate",
+        "click .goback"     : "goBack"
     },
 
     navigateTags: function(){
@@ -24,17 +25,17 @@ window.NavigationView = Backbone.View.extend({
         app.navigate('notes/list', true);      
     },
 
-    selectMenuItem: function (menuItem) {
+    selectMenuItem: function (menu_item) {
         this.showNavigation();
-        if (menuItem === 'tags'){
+        if (menu_item === 'tags'){
             $('.filter_2').hide();
-        }else if (menuItem === 'notes'){
+        }else if (menu_item === 'notes'){
             $('.filter_2').show();
         }
         // $('.btn-group button').removeClass('active');
         $('.filter_1 button').removeClass('active');        
-        if (menuItem) {
-            $('.' + menuItem).addClass('active');
+        if (menu_item) {
+            $('.' + menu_item).addClass('active');
         }
     },
 
@@ -69,5 +70,9 @@ window.NavigationView = Backbone.View.extend({
         }else if ($(".bydate").hasClass("active")){
             return "date";
         }
+    },
+
+    goBack: function(){
+        window.history.back();
     }
 });

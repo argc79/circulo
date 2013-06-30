@@ -1,6 +1,6 @@
 circulo.AppRouter = Backbone.Router.extend({
 	routes: {
-		""                      : "listNote" ,
+		""                      : "listTag" ,
         "users/list"            : "listUser",
         "users/page/:page"      : "listUser",
         "users/add"             : "addUser",
