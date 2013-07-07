@@ -14,7 +14,7 @@
                         <label for="id" class="control-label">Id:</label>
 
                         <div id="id-section" class="controls">
-                            <input id="id" name="id" type="text" value="<%= id == null? '' : id %>" class="span1"
+                            <input id="id" name="id" type="text" value="<%= id === null ? '' : id %>" class="span1"
                                    disabled/>
                         </div>
                     </div>
@@ -79,23 +79,32 @@
                         <!-- <label for="subject" class="control-label">Content:</label> -->
 
                         <!-- <div> -->
-                            <div class="modal-footer">
-                                <button class="btn view-mode" data-dismiss="modal" aria-hidden="true"><i class="icon-eye-open"/> View</button>
-                                <button class="btn edit-mode" data-dismiss="modal" aria-hidden="true"><i class="icon-edit"/> Edit</button>
+                            <div class="modal-header">
+                                <div class="btn-group">
+                                    <button class="btn view-mode" aria-hidden="true"><i class="icon-eye-open"/> View</button>
+                                    <button class="btn edit-mode" aria-hidden="true"><i class="icon-edit"/> Edit</button>
+                                </div>                                
                             </div>
+                            
                             <div contenteditable="true" id="content" name="content">
                             </div>
-                            <!--<textarea id="content" name="content" data="<%= content %>"></textarea>-->                            
-                            <script type="text/javascript">                                
-                                CKEDITOR.inline("content");
-                                CKEDITOR.instances.content.setData(currentContent);    
+                            <script type="text/javascript">
+                                //window.NoteView.viewMode();
+                                if (window.note_id !== null) {
+                                    CKEDITOR.inline("content");
+                                    CKEDITOR.instances.content.setData(window.current_content);
+                                    $('.view-mode').addClass('active');
+                                } else {
+                                    CKEDITOR.replace("content");
+                                    $('.edit-mode').addClass('active');                                    
+                                }
                                 //CKEDITOR.disableAutoInline = false;                                            
-
                             </script>
                             <!-- This retrieves the data from the json model and put it into
                             the global currentContent variable-->
                             <% $(document).ready(function() {                                
-                                currentContent = content;
+                                window.current_content = content;
+                                window.note_id = id;
                             })%>
                             <span class="help-inline"></span>
                         <!-- </div> -->

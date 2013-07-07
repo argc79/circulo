@@ -1,6 +1,8 @@
 window.NoteView = Backbone.View.extend({
 
     initialize: function () {
+        // window.current_content = this.model.content;
+        // window.note_id = this.model.id;
         this.render();
     },
 
@@ -44,6 +46,7 @@ window.NoteView = Backbone.View.extend({
         if (this.model.id === null) {
             $("#delete-button", this.el).hide();
         }
+        
 
         return this;
     },
@@ -214,7 +217,8 @@ window.NoteView = Backbone.View.extend({
             this.model.attributes.content = editor.getData();
             editor.destroy(true);
         }
-
+        $('.edit-mode').removeClass('active');
+        $('.view-mode').addClass('active');
         CKEDITOR.inline("content");
         CKEDITOR.instances['content'].setData(this.model.attributes.content);    
         //CKEDITOR.disableAutoInline = true;
@@ -227,7 +231,8 @@ window.NoteView = Backbone.View.extend({
             this.model.attributes.content = editor.getData();
             editor.destroy(true);
         }
-
+        $('.view-mode').removeClass('active');
+        $('.edit-mode').addClass('active');
         CKEDITOR.replace("content");
         CKEDITOR.instances['content'].setData(this.model.attributes.content);            
         //CKEDITOR.config.readOnly = false;

@@ -64,5 +64,5 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.001" classname="circulo.circulo_model.AppTest" name="testApp"/>
+  <testcase time="0.002" classname="circulo.circulo_model.AppTest" name="testApp"/>
 </testsuite>
