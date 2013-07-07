@@ -16,14 +16,17 @@
 					authentication-failure-url="/loginfailed.do" />
 		<logout logout-success-url="/logout.do" />
 	</http> -->
-	<http auto-config="true" use-expressions="true">
+	<http auto-config="true" use-expressions="true" >
 		<intercept-url pattern="/" access="permitAll"/>
 		<intercept-url pattern="/index.html" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/welcome*" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/rest/**" access="hasRole('ROLE_USER')" />
 		<!-- <form-login login-page="/login.do" default-target-url="/welcome.do"
 					authentication-failure-url="/loginfailed.do" /> -->
-		<openid-login login-page="/login.do" user-service-ref="registeringOpenIDAuthenticationUserDetailsService">
+		<openid-login login-page="/login.do" user-service-ref="registeringOpenIDAuthenticationUserDetailsService" >
+			<!-- Authentication success handler not used -->
+			<!--<openid-login login-page="/login.do" user-service-ref="registeringOpenIDAuthenticationUserDetailsService" 
+			authentication-success-handler-ref="authenticationOkHandler" >-->
 			<attribute-exchange identifier-match=".*myopenid.com.*">
                 <openid-attribute name="email" type="http://schema.openid.net/contact/email" required="true"/>
                 <openid-attribute name="fullname" type="http://schema.openid.net/namePerson" required="true"/>
@@ -58,4 +61,7 @@
 		<bean:property name="circuloService" ref="defaultCirculoService"/>
 	</bean:bean>
 
+	<!-- Authentication success handler not used -->
+	<!-- <bean:bean id="authenticationOkHandler" class="circulo.circulo_security.authentication.AuthenticationOkHandler">
+	</bean:bean> -->
 </bean:beans>

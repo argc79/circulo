@@ -38,10 +38,12 @@ window.NoteView = Backbone.View.extend({
                 expandOnFocus: true
         });
 
-        if (this.model.id !==null){
+        if (this.model.id !== null) {
             $("#google-calendar", this.el).append("<a href='http://www.google.com/calendar/event?action=TEMPLATE&text=Note:%20" + escape(this.model.get('subject')) + "&details=Link%20to%20note:%20http://rocket79.dyndns.org:83/circulo/%23notes/" + this.model.id + "&trp=false' target='_blank'><img src='//www.google.com/calendar/images/ext/gc_button2.gif' border=0></a>");
         }
-        
+        if (this.model.id === null) {
+            $("#delete-button", this.el).hide();
+        }
         return this;
     },
 

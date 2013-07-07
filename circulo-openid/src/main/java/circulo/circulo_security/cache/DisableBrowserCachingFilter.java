@@ -24,7 +24,6 @@ public class DisableBrowserCachingFilter implements Filter {
 				"no-cache, no-store, must-revalidate"); // HTTP 1.1
 		httpResponse.setHeader("Pragma", "no-cache"); // HTTP 1.0
 		httpResponse.setDateHeader("Expires", 0); // Proxies.
-		// logger.info("The caching system has been disabled");
 		chain.doFilter(request, response);
 	}
 
