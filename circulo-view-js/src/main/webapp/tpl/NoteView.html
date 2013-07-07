@@ -78,12 +78,19 @@
                     <div class="offset1 span10">
                         <!-- <label for="subject" class="control-label">Content:</label> -->
 
-                        <div>
+                        <!-- <div> -->
+                            <div class="modal-footer">
+                                <button class="btn view-mode" data-dismiss="modal" aria-hidden="true"><i class="icon-eye-open"/> View</button>
+                                <button class="btn edit-mode" data-dismiss="modal" aria-hidden="true"><i class="icon-edit"/> Edit</button>
+                            </div>
+                            <div contenteditable="true" id="content" name="content">
+                            </div>
+                            <!--<textarea id="content" name="content" data="<%= content %>"></textarea>-->                            
+                            <script type="text/javascript">                                
+                                CKEDITOR.inline("content");
+                                CKEDITOR.instances.content.setData(currentContent);    
+                                //CKEDITOR.disableAutoInline = false;                                            
 
-                            <textarea id="content" name="content" data="<%= content %>"></textarea>                            
-                            <script type="text/javascript">
-                                CKEDITOR.replace("content");
-                                CKEDITOR.instances.content.setData(currentContent);                                
                             </script>
                             <!-- This retrieves the data from the json model and put it into
                             the global currentContent variable-->
@@ -91,7 +98,7 @@
                                 currentContent = content;
                             })%>
                             <span class="help-inline"></span>
-                        </div>
+                        <!-- </div> -->
                     </div>
                     
                     <div class="offset1 <%= id == null? 'hide' : '' %>">

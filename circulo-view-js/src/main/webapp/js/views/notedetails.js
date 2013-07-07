@@ -44,8 +44,10 @@ window.NoteView = Backbone.View.extend({
         if (this.model.id === null) {
             $("#delete-button", this.el).hide();
         }
+
         return this;
     },
+
 
     isTagSelected: function(id){
         var taglist = this.model.get("tags"),
@@ -64,7 +66,9 @@ window.NoteView = Backbone.View.extend({
         "click .delete"         : "deleteNote",
         "drop #picture"         : "dropHandler",
         "click .addTags"        : "addTags",
-        "click .btn-save-tags"  : "saveTags"
+        "click .btn-save-tags"  : "saveTags",
+        "click .view-mode"      : "viewMode",
+        "click .edit-mode"      : "editMode"
         // "keypress #tags"    : "listTags"
     },
 
@@ -202,6 +206,31 @@ window.NoteView = Backbone.View.extend({
         $("#tags-available").append("<a id='add-tags' class='btn addTags'>Add Tags</a>");
         
         $('#myModal').modal("hide");
-    }
+    },
+
+    viewMode: function() {
+        var editor = CKEDITOR.instances['content'];
+        if (editor) {
+            this.model.attributes.content = editor.getData();
+            editor.destroy(true);
+        }
+
+        CKEDITOR.inline("content");
+        CKEDITOR.instances['content'].setData(this.model.attributes.content);    
+        //CKEDITOR.disableAutoInline = true;
+        //CKEDITOR.config.readOnly = true;
+    },
+
+    editMode: function() {
+        var editor = CKEDITOR.instances['content'];
+        if (editor) {
+            this.model.attributes.content = editor.getData();
+            editor.destroy(true);
+        }
+
+        CKEDITOR.replace("content");
+        CKEDITOR.instances['content'].setData(this.model.attributes.content);            
+        //CKEDITOR.config.readOnly = false;
+    }    
 
 });
