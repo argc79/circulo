@@ -40,11 +40,11 @@ window.NavigationView = Backbone.View.extend({
     },
 
     hideNavigation: function(){
-        $('.btn-group').hide();
+        $('.btn-group-navigation').hide();
     },
 
     showNavigation: function(){
-        $('.btn-group').show();
+        $('.btn-group-navigation').show();
     },
 
     sortAlpha: function(){

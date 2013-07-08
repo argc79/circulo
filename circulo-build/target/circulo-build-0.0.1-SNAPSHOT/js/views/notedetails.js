@@ -1,8 +1,6 @@
 window.NoteView = Backbone.View.extend({
 
     initialize: function () {
-        // window.current_content = this.model.content;
-        // window.note_id = this.model.id;
         this.render();
     },
 
@@ -46,11 +44,9 @@ window.NoteView = Backbone.View.extend({
         if (this.model.id === null) {
             $("#delete-button", this.el).hide();
         }
-        
 
         return this;
     },
-
 
     isTagSelected: function(id){
         var taglist = this.model.get("tags"),
@@ -212,30 +208,31 @@ window.NoteView = Backbone.View.extend({
     },
 
     viewMode: function() {
-        var editor = CKEDITOR.instances['content'];
+        var editor = CKEDITOR.instances['note-content'];
         if (editor) {
             this.model.attributes.content = editor.getData();
             editor.destroy(true);
         }
         $('.edit-mode').removeClass('active');
         $('.view-mode').addClass('active');
-        CKEDITOR.inline("content");
-        CKEDITOR.instances['content'].setData(this.model.attributes.content);    
-        //CKEDITOR.disableAutoInline = true;
-        //CKEDITOR.config.readOnly = true;
+        CKEDITOR.inline("note-content");
+        CKEDITOR.instances['note-content'].setData(this.model.attributes.content);    
+        
+        return false;
     },
 
     editMode: function() {
-        var editor = CKEDITOR.instances['content'];
+        var editor = CKEDITOR.instances['note-content'];
         if (editor) {
             this.model.attributes.content = editor.getData();
             editor.destroy(true);
         }
         $('.view-mode').removeClass('active');
         $('.edit-mode').addClass('active');
-        CKEDITOR.replace("content");
-        CKEDITOR.instances['content'].setData(this.model.attributes.content);            
-        //CKEDITOR.config.readOnly = false;
+        CKEDITOR.replace("note-content");
+        CKEDITOR.instances['note-content'].setData(this.model.attributes.content);            
+
+        return false;
     }    
 
 });

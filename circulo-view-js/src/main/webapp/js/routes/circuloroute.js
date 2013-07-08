@@ -103,12 +103,12 @@ circulo.AppRouter = Backbone.Router.extend({
             noteList = new circulo.NoteCollection(), 
             sortingSelection = this.navigationView.getSelectedSorting();
         
-        if (sortingSelection==='alpha'){
+        if (sortingSelection === 'alpha') {
             noteList.comparator = function(note){
                 return note.get("subject");
             };
-        }else if (sortingSelection==='date'){
-            noteList.comparator = function(note){
+        } else if (sortingSelection === 'date') {
+            noteList.comparator = function(note) {
                 return -note.get("modifiedOn");
             };
         }       

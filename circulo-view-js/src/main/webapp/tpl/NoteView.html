@@ -80,32 +80,32 @@
 
                         <!-- <div> -->
                             <div class="modal-header">
-                                <div class="btn-group">
-                                    <button class="btn view-mode" aria-hidden="true"><i class="icon-eye-open"/> View</button>
+                                <div class="btn-group view-edit-group">
+                                    <button class="btn view-mode active" aria-hidden="true"><i class="icon-eye-open"/> View</button>
                                     <button class="btn edit-mode" aria-hidden="true"><i class="icon-edit"/> Edit</button>
                                 </div>                                
                             </div>
                             
-                            <div contenteditable="true" id="content" name="content">
-                            </div>
-                            <script type="text/javascript">
-                                //window.NoteView.viewMode();
-                                if (window.note_id !== null) {
-                                    CKEDITOR.inline("content");
-                                    CKEDITOR.instances.content.setData(window.current_content);
-                                    $('.view-mode').addClass('active');
-                                } else {
-                                    CKEDITOR.replace("content");
-                                    $('.edit-mode').addClass('active');                                    
-                                }
-                                //CKEDITOR.disableAutoInline = false;                                            
-                            </script>
+                            <div contenteditable="true" id="note-content" name="note-content">
+                            </div>                            
                             <!-- This retrieves the data from the json model and put it into
                             the global currentContent variable-->
                             <% $(document).ready(function() {                                
                                 window.current_content = content;
                                 window.note_id = id;
                             })%>
+
+                            <script type="text/javascript">
+                                //window.NoteView.viewMode();
+                                if (window.note_id !== null) {
+                                    CKEDITOR.inline("note-content");
+                                    CKEDITOR.instances['note-content'].setData(window.current_content);
+                                    $('.view-mode').addClass('active');
+                                } else {
+                                    CKEDITOR.replace("note-content");
+                                    $('.edit-mode').addClass('active');                                    
+                                }
+                            </script>
                             <span class="help-inline"></span>
                         <!-- </div> -->
                     </div>
