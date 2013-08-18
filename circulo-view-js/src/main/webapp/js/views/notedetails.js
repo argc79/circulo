@@ -121,7 +121,7 @@ window.NoteView = Backbone.View.extend({
         }
         this.model.set("modifiedOn", now);
         //Get the content from CKEditor
-        this.model.attributes.content = CKEDITOR.instances['content'].getData();
+        this.model.attributes.content = CKEDITOR.instances['note-content'].getData();
 
         // Upload picture file if a new file was dropped in the drop area
         if (this.pictureFile) {
